@@ -8,8 +8,9 @@ import { Third } from "../components/welcome/Third";
 import { Forth } from "../components/welcome/Forth";
 
 export const routes: RouteRecordRaw[] = [
-  { path: "/", component: Foo },
-  { path: "/about", component: Bar },
+  { path: "/", component: Welcome },
+  // { path: "/about", component: Bar },
+
   {
     path: "/welcome",
     component: Welcome,

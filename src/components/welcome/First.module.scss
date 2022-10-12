@@ -21,12 +21,20 @@
     }
   }
   > .action {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: var(--welcome-nav-height);
+    line-height: var(--welcome-nav-height);
+    z-index: var(--z-index-bottom-nav);
+    background-color: var(--welcome-bg-end);
     display: flex;
     justify-content: space-between;
-    margin: 0 16px;
     font-size: 32px;
     color: var(--welcome-text);
-    padding: 24px 0;
+    padding: 0 16px;
+    padding-bottom: var(--welcome-nav-gap);
     > .fake {
       visibility: hidden;
     }

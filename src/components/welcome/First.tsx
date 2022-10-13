@@ -1,11 +1,10 @@
-import { defineComponent } from "vue";
 import { RouterLink } from "vue-router";
 import s from "./WelcomeLayout.module.scss";
 import logo from "../../assets/icons/pig.svg";
 import { WelcomeLayout } from "./WelcomeLayout";
-export const First = defineComponent({
-  setup: (props, context) => {
-    const slots = {
+export const First = () => (
+  <WelcomeLayout>
+    {{
       icon: () => <img class={s.pig} src={logo} />,
       title: () => (
         <h2>
@@ -23,7 +22,7 @@ export const First = defineComponent({
           <RouterLink to={"/start"}>跳过</RouterLink>
         </>
       ),
-    };
-    return () => <WelcomeLayout v-slots={slots} />;
-  },
-});
+    }}
+  </WelcomeLayout>
+);
+First.displayName = "First";

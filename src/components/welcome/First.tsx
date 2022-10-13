@@ -1,27 +1,29 @@
 import { defineComponent } from "vue";
 import { RouterLink } from "vue-router";
-import s from "./First.module.scss";
+import s from "./WelcomeLayout.module.scss";
 import logo from "../../assets/icons/pig.svg";
+import { WelcomeLayout } from "./WelcomeLayout";
 export const First = defineComponent({
   setup: (props, context) => {
-    return () => (
-      <div class={s.wrapper}>
-        <div class={s.card}>
-          <img class={s.pig} src={logo} />
-          <h2>
-            会挣钱
-            <br />
-            还会省钱
-          </h2>
-        </div>
-        <div class={s.action}>
+    const slots = {
+      icon: () => <img class={s.pig} src={logo} />,
+      title: () => (
+        <h2>
+          {" "}
+          会挣钱 <br /> 还会省钱{" "}
+        </h2>
+      ),
+      buttons: () => (
+        <>
           <RouterLink class={s.fake} to={"/start"}>
-            跳过
+            {" "}
+            跳过{" "}
           </RouterLink>
           <RouterLink to={"/welcome/2"}>下一页</RouterLink>
           <RouterLink to={"/start"}>跳过</RouterLink>
-        </div>
-      </div>
-    );
+        </>
+      ),
+    };
+    return () => <WelcomeLayout v-slots={slots} />;
   },
 });

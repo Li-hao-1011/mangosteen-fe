@@ -1,8 +1,9 @@
 import s from "./WelcomeLayout.module.scss";
-import logo from "../../assets/icons/cloud.svg";
 export const Forth = () => (
   <div class={s.card}>
-    <img src={logo} />
+    <svg>
+      <use xlinkHref="#cloud" />
+    </svg>
     <h2>
       云备份
       <br />

@@ -11,17 +11,17 @@ export const Tabs = defineComponent({
   },
   setup: (props, context) => {
     return () => {
-      const els = context.slots.default?.();
-      if (!els) return () => null;
-      for (let i = 0; i < els.length; i++) {
-        if (els[i].type !== Tab) {
+      const tabEls = context.slots.default?.();
+      if (!tabEls) return () => null;
+      for (let i = 0; i < tabEls.length; i++) {
+        if (tabEls[i].type !== Tab) {
           throw new Error("Tabs only accepts <Tab /> as children");
         }
       }
       return (
         <div class={s.tabs}>
           <ol class={s.tabs_nav}>
-            {els.map((item) => (
+            {tabEls.map((item) => (
               <li
                 class={item.props?.name === props.selected ? s.selected : ""}
                 onClick={() => {
@@ -33,7 +33,7 @@ export const Tabs = defineComponent({
               </li>
             ))}
           </ol>
-          <div></div>
+          <div>{tabEls.find((item) => item.props?.name === props.selected)}</div>
         </div>
       );
     };

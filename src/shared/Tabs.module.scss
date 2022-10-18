@@ -1,0 +1,12 @@
+.tabs {
+  &_nav {
+    > li {
+      &.selected {
+        background: pink;
+      }
+    }
+  }
+}
+
+.tab {
+}

@@ -69,7 +69,11 @@ export const InputPad = defineComponent({
           </span>
           <span class={s.amount}>1999.99</span>
         </div>
-        <div class={s.buttons}>1243123</div>
+        <div class={s.buttons}>
+          {btnMap.map((button) => (
+            <button onClick={button.onClick}>{button.text}</button>
+          ))}
+        </div>{" "}
       </>
     );
   },

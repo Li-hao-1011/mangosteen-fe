@@ -1,0 +1,27 @@
+.date_and_amount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  font-family: monospace;
+  > .date {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 12px;
+    color: var(--date-text);
+    > .icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+  }
+  > .amount {
+    font-size: 20px;
+    color: var(--amount-text);
+  }
+  .notes {
+  }
+}
+.amount {
+}

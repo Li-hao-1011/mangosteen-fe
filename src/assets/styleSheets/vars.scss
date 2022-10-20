@@ -28,4 +28,12 @@
   --num-button-bg: white;
   --num-button-bg-important: #5c33be;
   --num-button-text-important: white;
+
+  --input-min-height: 48px;
+  --input-border-color: #5c33be;
+  --input-radius: var(--button-radius);
+  --input-shadow: rgba(0, 0, 0, 0.25);
+  --error-color: #e10505;
+  --emoji-nav-text: #999;
+  --emoji-nav-text-selected: #333;
 }

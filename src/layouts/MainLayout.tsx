@@ -9,8 +9,8 @@ export const MainLayout = defineComponent({
   },
   setup: (props, context) => {
     return () => (
-      <div>
-        <Navbar>
+      <div class={s.wrapper}>
+        <Navbar class={s.navbar}>
           {{
             default: () => context.slots.title?.(),
             icon: () => context.slots.icon?.(),

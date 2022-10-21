@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
 import { RouterView } from "vue-router";
-import "./App.module.scss";
+import "./App.scss";
 
 export const App = defineComponent({
   setup() {

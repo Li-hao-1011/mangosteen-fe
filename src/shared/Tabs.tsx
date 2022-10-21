@@ -8,6 +8,9 @@ export const Tabs = defineComponent({
     onUpdateSelected: {
       type: Function as PropType<(name: string) => void>,
     },
+    classPrefix: {
+      type: String,
+    },
   },
   setup: (props, context) => {
     return () => {
@@ -18,22 +21,32 @@ export const Tabs = defineComponent({
           throw new Error("Tabs only accepts <Tab /> as children");
         }
       }
+      const cp = props.classPrefix;
       return (
-        <div class={s.tabs}>
-          <ol class={s.tabs_nav}>
+        <div class={[s.tabs, cp + "_tabs"]}>
+          <ol class={[s.tabs_nav, cp + "_tabs_nav"]}>
             {tabEls.map((item) => (
               <li
-                class={item.props?.name === props.selected ? s.selected : ""}
+                class={[
+                  item.props?.name === props.selected
+                    ? [s.selected, cp + "_selected"]
+                    : "",
+                  cp + "_tabs_nav_item",
+                ]}
                 onClick={() => {
                   props.onUpdateSelected?.(item.props?.name);
                 }}
               >
-                {/* <li class={item.props?.name === props.selected ? s.selected : ""} onClick={() => { context.emit("update:selected", item.props?.name); }} > */}
+                {/* <li class={[item.props?.name === props.selected ? s.selected : "",
+                cp + "_tabs_nav_item",
+              ]} onClick={() => { context.emit("update:selected", item.props?.name); }} > */}
                 {item.props?.name}
               </li>
             ))}
           </ol>
-          <div>{tabEls.find((item) => item.props?.name === props.selected)}</div>
+          <div>
+            {tabEls.find((item) => item.props?.name === props.selected)}
+          </div>
         </div>
       );
     };

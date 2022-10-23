@@ -1,3 +1,4 @@
+import { Overlay } from "vant";
 import { defineComponent, PropType, reactive, ref } from "vue";
 import { MainLayout } from "../../layouts/MainLayout";
 import { Icon } from "../../shared/Icon";
@@ -28,6 +29,7 @@ export const ItemList = defineComponent({
         end: new Time(),
       },
     ]);
+    const refOverlayVisible = ref(true);
     return () => (
       <MainLayout>
         {{
@@ -35,6 +37,7 @@ export const ItemList = defineComponent({
           icon: () => <Icon name="menu" />,
           default: () => (
             // <Tabs v-model:selected={refSelected.value} classPrefix="lihao">
+            <>
             <Tabs
               selected={refSelected.value}
               onUpdateSelected={onUpdateSelected}
@@ -66,6 +69,12 @@ export const ItemList = defineComponent({
                 />
               </Tab>
             </Tabs>
+            <Overlay show={refOverlayVisible.value} class={s.overlay}>
+              <div class={s.overlay_inner}>
+                <header>请选择时间</header>
+              </div>
+            </Overlay>
+            </>
           ),
         }}
       </MainLayout>

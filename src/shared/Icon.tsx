@@ -6,7 +6,7 @@ import s from "./Icon.module.scss";
 export const Icon = defineComponent({
   props: {
     name: {
-      type: String as PropType<string>,
+      type: String as PropType<String>,
       required: true,
     },
     onClick: {

@@ -3,7 +3,10 @@ import { Icon } from "./Icon";
 import s from "./FloatButton.module.scss";
 export const FloatButton = defineComponent({
   props: {
-    iconName: String as PropType<string>,
+    iconName: {
+      type: String as PropType<String>,
+      required: true,
+    },
   },
   setup: (props, context) => {
     return () => (

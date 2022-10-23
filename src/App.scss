@@ -11,9 +11,10 @@ body {
   color: #333;
 }
 
-::-webkit-scrollbar {
-  visibility: hidden;
-}
+// 问题
+// ::-webkit-scrollbar {
+//    visibility: hidden;
+// }
 
 .customTabs_tabs_nav {
   justify-content: flex-start !important;

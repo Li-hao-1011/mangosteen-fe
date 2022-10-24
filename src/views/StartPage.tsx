@@ -6,7 +6,7 @@ import { Center } from "../shared/Center";
 import { FloatButton } from "../shared/FloatButton";
 import { Icon } from "../shared/Icon";
 import { Navbar } from "../shared/Navbar";
-import { Overlay } from "../shared/Overlay";
+import { Overlay, OverlayIcon } from "../shared/Overlay";
 import s from "./StartPage.module.scss";
 export const StartPage = defineComponent({
   setup: (props, context) => {
@@ -22,9 +22,7 @@ export const StartPage = defineComponent({
       <MainLayout>
         {{
           title: () => "山竹记账",
-          icon: () => (
-            <Icon name="menu" class={s.nav_icon} onClick={onClickMenu} />
-          ),
+          icon: () => <OverlayIcon />,
           default: () => (
             <>
               <Center class={s.wrapper}>
@@ -38,12 +36,6 @@ export const StartPage = defineComponent({
               <RouterLink to="/items/create">
                 <FloatButton iconName="add"></FloatButton>
               </RouterLink>
-
-              {refOverlayVisible.value && (
-                <Overlay
-                  onClose={() => (refOverlayVisible.value = false)}
-                ></Overlay>
-              )}
             </>
           ),
         }}

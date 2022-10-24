@@ -95,7 +95,7 @@ export const ItemCreate = defineComponent({
             <div class={s.wrapper}>
               <Tabs
                 selected={refkind.value}
-                onUpdateSelected={onUpdateSelected}
+                onUpdate:selected={onUpdateSelected}
                 class={s.tabs}
               >
                 {/* <Tabs v-model:selected={refkind.value}> */}

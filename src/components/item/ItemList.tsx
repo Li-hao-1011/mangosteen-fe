@@ -10,8 +10,6 @@ import { ItemSummary } from "./ItemSummary";
 export const ItemList = defineComponent({
   setup: (props, context) => {
     const refSelected = ref("本月");
-    const onUpdateSelected = (name: string) => (refSelected.value = name);
-
     const time = new Time();
     const timeList = [
       { start: time.firstDayOfMount(), end: time.lastDayOfMount() },
@@ -42,10 +40,10 @@ export const ItemList = defineComponent({
             // <Tabs v-model:selected={refSelected.value} classPrefix="lihao">
             <>
               <Tabs
-                selected={refSelected.value}
-                onUpdateSelected={onUpdateSelected}
+                v-model:selected={refSelected.value}
                 class={s.tabs}
                 classPrefix="customTabs"
+                onUpdate:selected={() => (refOverlayVisible.value = true)}
               >
                 <Tab name="本月">
                   <ItemSummary
@@ -89,7 +87,12 @@ export const ItemList = defineComponent({
                       />
                       <FormItem>
                         <div class={s.actions}>
-                          <button type="button">取消</button>
+                          <button
+                            type="button"
+                            onClick={() => (refOverlayVisible.value = false)}
+                          >
+                            取消
+                          </button>
                           <button type="submit">确认</button>
                         </div>
                       </FormItem>

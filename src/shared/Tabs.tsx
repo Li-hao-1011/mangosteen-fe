@@ -6,14 +6,15 @@ export const Tabs = defineComponent({
       type: String as PropType<String>,
       required: false,
     },
-    onUpdateSelected: {
+    /*     onUpdateSelected: {
       type: Function as PropType<(name: string) => void>,
       required: false,
-    },
+    }, */
     classPrefix: {
       type: String,
     },
   },
+  emits: ["update:selected"],
   setup: (props, context) => {
     return () => {
       const tabEls = context.slots.default?.();
@@ -36,7 +37,8 @@ export const Tabs = defineComponent({
                   cp + "_tabs_nav_item",
                 ]}
                 onClick={() => {
-                  props.onUpdateSelected?.(item.props?.name);
+                  // props.onUpdateSelected?.(item.props?.name);
+                  context.emit('update:selected', item.props?.name)
                 }}
               >
                 {/* <li class={[item.props?.name === props.selected ? s.selected : "",

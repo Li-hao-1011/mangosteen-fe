@@ -4,9 +4,11 @@ export const Tabs = defineComponent({
   props: {
     selected: {
       type: String as PropType<String>,
+      required: false,
     },
     onUpdateSelected: {
       type: Function as PropType<(name: string) => void>,
+      required: false,
     },
     classPrefix: {
       type: String,

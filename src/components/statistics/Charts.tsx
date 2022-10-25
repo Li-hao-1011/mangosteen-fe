@@ -1,6 +1,11 @@
 import { defineComponent, PropType, ref } from "vue";
 import { FormItem } from "../../shared/Form";
 import s from "./Charts.module.scss";
+import * as echarts from "echarts";
+import { LineChart } from "./LineChart";
+import { PieChart } from "./PieChart";
+import { Bars } from "./Bars";
+
 export const Charts = defineComponent({
   props: {
     startDate: {
@@ -27,6 +32,10 @@ export const Charts = defineComponent({
           ]}
           v-model={category.value}
         />
+
+        <LineChart />
+        <PieChart />
+        <Bars />
       </div>
     );
   },

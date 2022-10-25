@@ -29,13 +29,16 @@ export const FormItem = defineComponent({
     },
     type: {
       type: String as PropType<
-        "text" | "emojiSelect" | "date" | "vilidationCode"
+        "text" | "emojiSelect" | "date" | "vilidationCode" | "select"
       >,
     },
     error: {
       type: String,
     },
     placeholder: String,
+    options: {
+      type: Array as PropType<Array<{ text: string; value: string }>>,
+    },
   },
   emits: ["update:modelValue"],
   setup: (props, context) => {
@@ -79,6 +82,21 @@ export const FormItem = defineComponent({
               </Button>
             </>
           );
+
+        case "select":
+          return (
+            <select
+              class={[s.formItem, s.select]}
+              value={props.modelValue}
+              onChange={(e: any) =>
+                context.emit("update:modelValue", e.target.value)
+              }
+            >
+              {props.options?.map((option) => (
+                <option key={option.value}>{option.text}</option>
+              ))}
+            </select>
+          );
         case "date":
           return (
             <>
@@ -109,8 +127,6 @@ export const FormItem = defineComponent({
           return context.slots.default?.();
       }
     });
-    console.log(props.label, props.error, !!props.error);
-
     return () => (
       <div class={s.formRow}>
         <label class={s.formLabel}>

@@ -41,7 +41,7 @@ export const TagForm = defineComponent({
           label="标签名"
           type="text"
           v-model={formData.name}
-          error={errors["name"] ? errors["name"][0] : "　"}
+          error={errors["name"] ? errors["name"]?.[0] : "　"}
         ></FormItem>
         <FormItem
           label={"符号 " + formData.sign}

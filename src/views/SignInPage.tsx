@@ -22,6 +22,8 @@ export const SignInPage = defineComponent({
       code: [],
     });
     const onSubmit = (e: Event) => {
+      console.log("onSubmit");
+
       e.preventDefault();
       Object.assign(errors, {
         email: [],

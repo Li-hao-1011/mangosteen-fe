@@ -1,8 +1,8 @@
-import axios from "axios";
 import { defineComponent, PropType, reactive, ref } from "vue";
 import { MainLayout } from "../layouts/MainLayout";
 import { Button } from "../shared/Button";
 import { Form, FormItem } from "../shared/Form";
+import { http } from "../shared/Http";
 import { Icon } from "../shared/Icon";
 import { validate } from "../shared/validate";
 import s from "./SignInPage.module.scss";
@@ -43,8 +43,8 @@ export const SignInPage = defineComponent({
     };
     const refVilidationCode = ref<any>();
     const onClickSendValidationCode = async () => {
-      const response = await axios
-        .post("/api/v1/validation_codes", {
+      const response = await http
+        .post("/validation_codes", {
           email: formData.email,
         })
         .catch(() => {});
@@ -74,7 +74,7 @@ export const SignInPage = defineComponent({
                   label="验证码"
                   type="vilidationCode"
                   v-model={formData.code}
-                  countFrom={3}
+                  countFrom={1}
                   error={errors["code"]?.[0] ?? "　"}
                   placeholder="请输入六位数字"
                   onClick={onClickSendValidationCode}

@@ -47,7 +47,9 @@ export const SignInPage = defineComponent({
         .post("/validation_codes", {
           email: formData.email,
         })
-        .catch(() => {});
+        .catch((error) => {
+          // 失败
+        });
       refVilidationCode.value.startCount();
     };
     return () => (

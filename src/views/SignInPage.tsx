@@ -40,6 +40,9 @@ export const SignInPage = defineComponent({
         ])
       );
     };
+    const onClickSendValidationCode = () => {
+      console.log(12222222222);
+    };
     return () => (
       <MainLayout>
         {{
@@ -65,6 +68,7 @@ export const SignInPage = defineComponent({
                   v-model={formData.code}
                   error={errors["code"]?.[0] ?? "　"}
                   placeholder="请输入六位数字"
+                  onClick={onClickSendValidationCode}
                 ></FormItem>
                 <FormItem style={{ paddingTop: "64px" }}>
                   <Button>登录</Button>

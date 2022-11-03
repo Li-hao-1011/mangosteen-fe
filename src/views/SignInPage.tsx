@@ -14,7 +14,7 @@ export const SignInPage = defineComponent({
   },
   setup: (props, context) => {
     const formData = reactive({
-      email: "",
+      email: "lihao.coder@foxmail.com",
       code: "",
     });
     const errors = reactive({
@@ -74,7 +74,7 @@ export const SignInPage = defineComponent({
                   label="验证码"
                   type="vilidationCode"
                   v-model={formData.code}
-                  countFrom={60}
+                  countFrom={3}
                   error={errors["code"]?.[0] ?? "　"}
                   placeholder="请输入六位数字"
                   onClick={onClickSendValidationCode}

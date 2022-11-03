@@ -1,4 +1,4 @@
-import { DatetimePicker, Popup } from "vant";
+import { CouponList, DatetimePicker, Popup } from "vant";
 import { computed, defineComponent, PropType, ref } from "vue";
 import { Button } from "./Button";
 import { EmojiSelect } from "./EmojiSelect";
@@ -40,10 +40,28 @@ export const FormItem = defineComponent({
       type: Array as PropType<Array<{ text: string; value: string }>>,
     },
     onClick: Function as PropType<() => void>,
+    countFrom: {
+      type: Number,
+      default: 60,
+    },
   },
   emits: ["update:modelValue"],
   setup: (props, context) => {
     const refDateVisible = ref(false);
+    const timer = ref<number>();
+    const count = ref<number>(props.countFrom);
+    const isCounting = computed(() => !!timer.value);
+    const onClickSendValidationCode = () => {
+      props.onClick?.();
+      timer.value = setInterval(() => {
+        count.value--;
+        if (count.value === 0) {
+          clearInterval(timer.value);
+          timer.value = undefined;
+          count.value = props.countFrom;
+        }
+      }, 1000);
+    };
     const content = computed(() => {
       switch (props.type) {
         case "text":
@@ -79,10 +97,11 @@ export const FormItem = defineComponent({
                 placeholder={props.placeholder}
               />
               <Button
-                onClick={props.onClick}
+                disabled={isCounting.value}
+                onClick={onClickSendValidationCode}
                 class={[s.formItem, s.input, s.validationCode_button]}
               >
-                发送验证码
+                {isCounting.value ? `${count.value}秒后重新发送` : "发送验证码"}
               </Button>
             </>
           );

@@ -1,5 +1,6 @@
 import { CouponList, DatetimePicker, Popup } from "vant";
 import { computed, defineComponent, PropType, ref } from "vue";
+import { getFriendlyError } from "../views/getFrendlyRError";
 import { Button } from "./Button";
 import { EmojiSelect } from "./EmojiSelect";
 import s from "./Form.module.scss";
@@ -159,11 +160,10 @@ export const FormItem = defineComponent({
         <label class={s.formLabel}>
           {props.label && <span class={s.formItem_name}>{props.label}</span>}
           <div class={s.formItem_value}>{content.value}</div>
-          {props.error && (
-            <div class={s.formItem_errorHint}>
-              <span>{props.error ?? "　"}</span>
-            </div>
-          )}
+
+          <div class={s.formItem_errorHint}>
+            <span>{props.error ? getFriendlyError(props.error) : "　"}</span>
+          </div>
         </label>
       </div>
     );

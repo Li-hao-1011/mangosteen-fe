@@ -41,15 +41,19 @@ export const SignInPage = defineComponent({
         ])
       );
     };
+    const onError = (error: any) => {
+      if (error.response.status === 422) {
+        Object.assign(errors, error.response.data.errors);
+      }
+      throw error;
+    };
     const refVilidationCode = ref<any>();
     const onClickSendValidationCode = async () => {
       const response = await http
         .post("/validation_codes", {
           email: formData.email,
         })
-        .catch((error) => {
-          // 失败
-        });
+        .catch(onError);
       refVilidationCode.value.startCount();
     };
     return () => (

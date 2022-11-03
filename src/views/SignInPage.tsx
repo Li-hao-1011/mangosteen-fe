@@ -1,3 +1,4 @@
+import axios from "axios";
 import { defineComponent, PropType, reactive } from "vue";
 import { MainLayout } from "../layouts/MainLayout";
 import { Button } from "../shared/Button";
@@ -40,8 +41,12 @@ export const SignInPage = defineComponent({
         ])
       );
     };
-    const onClickSendValidationCode = () => {
+    const onClickSendValidationCode = async () => {
       console.log(12222222222);
+      const response = await axios.post("/api/v1/validation_codes", {
+        email: formData.email,
+      });
+      console.log(response);
     };
     return () => (
       <MainLayout>

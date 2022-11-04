@@ -24,8 +24,6 @@ export const SignInPage = defineComponent({
       code: [],
     });
     const onSubmit = async (e: Event) => {
-      console.log("tijiao");
-
       e.preventDefault();
       Object.assign(errors, {
         email: [],
@@ -46,12 +44,16 @@ export const SignInPage = defineComponent({
       );
 
       if (!hasError(errors)) {
-        const response = await http.post<{ jwt: string }>("/session", formData);
+        const response = await http
+          .post<{ jwt: string }>("/session", formData)
+          .catch(onError);
         localStorage.setItem("jwt", response.data.jwt);
+
         //
-        history.push('/')
+        history.push("/");
       }
     };
+
     const onError = (error: any) => {
       if (error.response.status === 422) {
         Object.assign(errors, error.response.data.errors);

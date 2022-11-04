@@ -1,9 +1,9 @@
 import { defineComponent, PropType, reactive, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useBool } from "../hooks/useBool";
 import { MainLayout } from "../layouts/MainLayout";
 import { Button } from "../shared/Button";
 import { Form, FormItem } from "../shared/Form";
-import { history } from "../shared/history";
 import { http } from "../shared/Http";
 import { Icon } from "../shared/Icon";
 import { hasError, validate } from "../shared/validate";
@@ -15,6 +15,8 @@ export const SignInPage = defineComponent({
     },
   },
   setup: (props, context) => {
+    const router = useRouter();
+    const route = useRoute();
     const formData = reactive({
       email: "lihao.coder@foxmail.com",
       code: "",
@@ -49,8 +51,13 @@ export const SignInPage = defineComponent({
           .catch(onError);
         localStorage.setItem("jwt", response.data.jwt);
 
-        //
-        history.push("/");
+        /**
+         * 获取到登录之前的页面并跳转
+         */
+        // const returnTo = localStorage.getItem("returnTo");
+        // router.push(returnTo || "/");
+        const returnTo = route.query.return_to?.toString()
+        router.push(returnTo || "/");
       }
     };
 

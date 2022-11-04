@@ -1,4 +1,5 @@
 import { defineComponent, PropType, reactive, ref } from "vue";
+import { useBool } from "../hooks/useBool";
 import { MainLayout } from "../layouts/MainLayout";
 import { Button } from "../shared/Button";
 import { Form, FormItem } from "../shared/Form";
@@ -48,12 +49,15 @@ export const SignInPage = defineComponent({
       throw error;
     };
     const refVilidationCode = ref<any>();
+    const { ref: redDisabled, on, off } = useBool(false);
     const onClickSendValidationCode = async () => {
+      on();
       const response = await http
         .post("/validation_codes", {
           email: formData.email,
         })
-        .catch(onError);
+        .catch(onError)
+        .finally(off);
       refVilidationCode.value.startCount();
     };
     return () => (
@@ -84,6 +88,7 @@ export const SignInPage = defineComponent({
                   error={errors["code"]?.[0] ?? "　"}
                   placeholder="请输入六位数字"
                   onClick={onClickSendValidationCode}
+                  disabled={redDisabled.value}
                 ></FormItem>
                 <FormItem style={{ paddingTop: "64px" }}>
                   <Button>登录</Button>

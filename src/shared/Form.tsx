@@ -1,9 +1,9 @@
 import { CouponList, DatetimePicker, Popup } from "vant";
 import { computed, defineComponent, PropType, ref } from "vue";
-import { getFriendlyError } from "../views/getFrendlyRError";
 import { Button } from "./Button";
 import { EmojiSelect } from "./EmojiSelect";
 import s from "./Form.module.scss";
+import { getFriendlyError } from "./getFriendlyError";
 import { Time } from "./time";
 export const Form = defineComponent({
   props: {
@@ -44,6 +44,9 @@ export const FormItem = defineComponent({
     countFrom: {
       type: Number,
       default: 60,
+    },
+    disabled: {
+      type: Boolean,
     },
   },
   emits: ["update:modelValue"],
@@ -102,7 +105,7 @@ export const FormItem = defineComponent({
                 placeholder={props.placeholder}
               />
               <Button
-                disabled={isCounting.value}
+                disabled={isCounting.value || props.disabled}
                 onClick={props.onClick}
                 class={[s.formItem, s.input, s.validationCode_button]}
               >

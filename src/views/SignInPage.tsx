@@ -5,7 +5,7 @@ import { Button } from "../shared/Button";
 import { Form, FormItem } from "../shared/Form";
 import { http } from "../shared/Http";
 import { Icon } from "../shared/Icon";
-import { validate } from "../shared/validate";
+import { hasError, validate } from "../shared/validate";
 import s from "./SignInPage.module.scss";
 export const SignInPage = defineComponent({
   props: {
@@ -22,7 +22,9 @@ export const SignInPage = defineComponent({
       email: [],
       code: [],
     });
-    const onSubmit = (e: Event) => {
+    const onSubmit = async (e: Event) => {
+      console.log("tijiao");
+
       e.preventDefault();
       Object.assign(errors, {
         email: [],
@@ -41,6 +43,10 @@ export const SignInPage = defineComponent({
           { key: "code", type: "required", message: "必填" },
         ])
       );
+
+      if (!hasError(errors)) {
+        const response = await http.post("/session", formData);
+      }
     };
     const onError = (error: any) => {
       if (error.response.status === 422) {
@@ -52,7 +58,7 @@ export const SignInPage = defineComponent({
     const { ref: redDisabled, on, off } = useBool(false);
     const onClickSendValidationCode = async () => {
       on();
-      const response = await http
+      await http
         .post("/validation_codes", {
           email: formData.email,
         })
@@ -71,6 +77,7 @@ export const SignInPage = defineComponent({
                 <Icon class={s.icon} name="mangosteensvg" />
                 <h1 class={s.appName}>山竹记账</h1>
               </div>
+              <div>{JSON.stringify(formData)}</div>
               <Form onSubmit={onSubmit}>
                 <FormItem
                   label="邮箱地址"
@@ -91,7 +98,7 @@ export const SignInPage = defineComponent({
                   disabled={redDisabled.value}
                 ></FormItem>
                 <FormItem style={{ paddingTop: "64px" }}>
-                  <Button>登录</Button>
+                  <Button type="submit">登录</Button>
                 </FormItem>
               </Form>
             </div>

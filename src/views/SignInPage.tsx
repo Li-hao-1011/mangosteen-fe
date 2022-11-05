@@ -6,6 +6,7 @@ import { Button } from "../shared/Button";
 import { Form, FormItem } from "../shared/Form";
 import { http } from "../shared/Http";
 import { Icon } from "../shared/Icon";
+import { fetchMe } from "../shared/me";
 import { hasError, validate } from "../shared/validate";
 import s from "./SignInPage.module.scss";
 export const SignInPage = defineComponent({
@@ -56,8 +57,14 @@ export const SignInPage = defineComponent({
          */
         // const returnTo = localStorage.getItem("returnTo");
         // router.push(returnTo || "/");
-        const returnTo = route.query.return_to?.toString()
-        router.push(returnTo || "/");
+        const returnTo = route.query.return_to?.toString();
+        fetchMe()
+          .then(() => {
+            router.push(returnTo || "/");
+          })
+          .catch(() => {
+            window.alert("登录失败");
+          });
       }
     };
 

@@ -79,11 +79,9 @@ http.instance.interceptors.request.use((config) => {
 
 http.instance.interceptors.response.use(
   (response) => {
-    console.log(response, "response");
     return response;
   },
   (error) => {
-    console.log(error, "error");
     if (error.response) {
       const axiosError = error as AxiosError;
       if (axiosError.response?.status === 429) {

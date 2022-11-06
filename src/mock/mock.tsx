@@ -15,6 +15,9 @@ export const mockSession: Mock = (config) => {
 };
 
 export const mockTagIndex: Mock = (config) => {
+  const { kind, page } = config.params;
+  const per_page = 25;
+  const count = 26;
   let id = 0;
   const createId = () => {
     return id++;
@@ -27,19 +30,26 @@ export const mockTagIndex: Mock = (config) => {
       kind: config.params.find,
       ...attrs,
     }));
+  const createParper = (page = 1) => ({
+    page,
+    per_page,
+    count,
+  });
 
-  if (config.params.kind === "expenses") {
-    return [
-      200,
-      {
-        resources: createTag(40),
-      },
-    ];
+  const createBody = (n = 1, attrs?: any) => ({
+    resources: createTag(n),
+    pager: createParper(page),
+  });
+
+  if (kind === "expenses" && (page === 1 || !page)) {
+    return [200, createBody(25)];
+  } else if (kind === "expenses" && page === 2) {
+    return [200, createBody(1)];
   } else {
     return [
       200,
       {
-        resources: createTag(18),
+        resources: createTag(20),
       },
     ];
   }

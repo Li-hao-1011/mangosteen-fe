@@ -38,7 +38,7 @@ export const Tabs = defineComponent({
                 ]}
                 onClick={() => {
                   // props.onUpdateSelected?.(item.props?.name);
-                  context.emit('update:selected', item.props?.name)
+                  context.emit("update:selected", item.props?.name);
                 }}
               >
                 {/* <li class={[item.props?.name === props.selected ? s.selected : "",
@@ -49,7 +49,18 @@ export const Tabs = defineComponent({
             ))}
           </ol>
           <div>
-            {tabEls.find((item) => item.props?.name === props.selected)}
+            {/* {tabEls.find((item) => item.props?.name === props.selected)} */}
+            {tabEls.map((item) => (
+              <div
+                v-show={item.props?.name === props.selected}
+                /*  style={{
+                  display:
+                    item.props?.name === props.selected ? "block" : "none",
+                }} */
+              >
+                {item}
+              </div>
+            ))}
           </div>
         </div>
       );

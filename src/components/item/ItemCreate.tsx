@@ -1,5 +1,6 @@
-import { defineComponent, PropType, ref } from "vue";
+import { defineComponent, onMounted, PropType, ref } from "vue";
 import { MainLayout } from "../../layouts/MainLayout";
+import { http } from "../../shared/Http";
 import { Icon } from "../../shared/Icon";
 import { Tab, Tabs } from "../../shared/Tabs";
 import { InputPad } from "./InputPad";
@@ -11,81 +12,24 @@ export const ItemCreate = defineComponent({
     },
   },
   setup: (props, context) => {
+    onMounted(async () => {
+      const res = await http.get<{ resources: Tag[] }>("/tags", {
+        kind: "expenses",
+        _mock: "tagIndex",
+      });
+      refExpensesTags.value = res.data.resources;
+    });
+    onMounted(async () => {
+      const res = await http.get<{ resources: Tag[] }>("/tags", {
+        kind: "income",
+        _mock: "tagIndex",
+      });
+      reIncomeTags.value = res.data.resources;
+    });
     const refkind = ref("支出");
     const onUpdateSelected = (name: string) => (refkind.value = name);
-    const refExpensesTags = ref([
-      { id: 1, name: "餐费", sign: "￥", category: "expenses" },
-      { id: 2, name: "打车", sign: "￥", category: "expenses" },
-      { id: 3, name: "聚餐", sign: "￥", category: "expenses" },
-      { id: 4, name: "游玩", sign: "￥", category: "expenses" },
-      { id: 5, name: "网吧", sign: "￥", category: "expenses" },
-      { id: 1, name: "餐费", sign: "￥", category: "expenses" },
-      { id: 2, name: "打车", sign: "￥", category: "expenses" },
-      { id: 3, name: "聚餐", sign: "￥", category: "expenses" },
-      { id: 4, name: "游玩", sign: "￥", category: "expenses" },
-      { id: 5, name: "网吧", sign: "￥", category: "expenses" },
-      { id: 1, name: "餐费", sign: "￥", category: "expenses" },
-      { id: 2, name: "打车", sign: "￥", category: "expenses" },
-      { id: 3, name: "聚餐", sign: "￥", category: "expenses" },
-      { id: 4, name: "游玩", sign: "￥", category: "expenses" },
-      { id: 5, name: "网吧", sign: "￥", category: "expenses" },
-      { id: 1, name: "餐费", sign: "￥", category: "expenses" },
-      { id: 2, name: "打车", sign: "￥", category: "expenses" },
-      { id: 3, name: "聚餐", sign: "￥", category: "expenses" },
-      { id: 4, name: "游玩", sign: "￥", category: "expenses" },
-      { id: 5, name: "网吧", sign: "￥", category: "expenses" },
-      { id: 1, name: "餐费", sign: "￥", category: "expenses" },
-      { id: 2, name: "打车", sign: "￥", category: "expenses" },
-      { id: 3, name: "聚餐", sign: "￥", category: "expenses" },
-      { id: 4, name: "游玩", sign: "￥", category: "expenses" },
-      { id: 5, name: "网吧", sign: "￥", category: "expenses" },
-      { id: 1, name: "餐费", sign: "￥", category: "expenses" },
-      { id: 2, name: "打车", sign: "￥", category: "expenses" },
-      { id: 3, name: "聚餐", sign: "￥", category: "expenses" },
-      { id: 4, name: "游玩", sign: "￥", category: "expenses" },
-      { id: 5, name: "网吧", sign: "￥", category: "expenses" },
-      { id: 1, name: "餐费", sign: "￥", category: "expenses" },
-      { id: 2, name: "打车", sign: "￥", category: "expenses" },
-      { id: 3, name: "聚餐", sign: "￥", category: "expenses" },
-      { id: 4, name: "游玩", sign: "￥", category: "expenses" },
-      { id: 5, name: "网吧", sign: "￥", category: "expenses" },
-      { id: 1, name: "餐费", sign: "￥", category: "expenses" },
-      { id: 2, name: "打车", sign: "￥", category: "expenses" },
-      { id: 3, name: "聚餐", sign: "￥", category: "expenses" },
-      { id: 4, name: "游玩", sign: "￥", category: "expenses" },
-      { id: 5, name: "网吧", sign: "￥", category: "expenses" },
-      { id: 1, name: "餐费", sign: "￥", category: "expenses" },
-      { id: 2, name: "打车", sign: "￥", category: "expenses" },
-      { id: 3, name: "聚餐", sign: "￥", category: "expenses" },
-      { id: 4, name: "游玩", sign: "￥", category: "expenses" },
-      { id: 5, name: "网吧", sign: "￥", category: "expenses" },
-      { id: 1, name: "餐费", sign: "￥", category: "expenses" },
-      { id: 2, name: "打车", sign: "￥", category: "expenses" },
-      { id: 3, name: "聚餐", sign: "￥", category: "expenses" },
-      { id: 4, name: "游玩", sign: "￥", category: "expenses" },
-      { id: 5, name: "网吧", sign: "￥", category: "expenses" },
-      { id: 1, name: "餐费", sign: "￥", category: "expenses" },
-      { id: 2, name: "打车", sign: "￥", category: "expenses" },
-      { id: 3, name: "聚餐", sign: "￥", category: "expenses" },
-      { id: 4, name: "游玩", sign: "￥", category: "expenses" },
-      { id: 5, name: "网吧", sign: "￥", category: "expenses" },
-      { id: 1, name: "餐费", sign: "￥", category: "expenses" },
-      { id: 2, name: "打车", sign: "￥", category: "expenses" },
-      { id: 3, name: "聚餐", sign: "￥", category: "expenses" },
-      { id: 4, name: "游玩", sign: "￥", category: "expenses" },
-      { id: 5, name: "网吧", sign: "￥", category: "expenses" },
-      { id: 1, name: "餐费", sign: "￥", category: "expenses" },
-      { id: 2, name: "打车", sign: "￥", category: "expenses" },
-      { id: 3, name: "聚餐", sign: "￥", category: "expenses" },
-      { id: 4, name: "游玩", sign: "￥", category: "expenses" },
-      { id: 5, name: "网吧", sign: "￥", category: "expenses" },
-    ]);
-    const reIncomeTags = ref([
-      { id: 5, name: "游玩", sign: "￥", category: "income" },
-      { id: 6, name: "餐费", sign: "￥", category: "income" },
-      { id: 7, name: "打车", sign: "￥", category: "income" },
-      { id: 8, name: "聚餐", sign: "￥", category: "income" },
-    ]);
+    const refExpensesTags = ref<Tag[]>([]);
+    const reIncomeTags = ref<Tag[]>([]);
     return () => (
       <MainLayout class={s.layout}>
         {{

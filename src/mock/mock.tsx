@@ -17,8 +17,6 @@ export const mockSession: Mock = (config) => {
 let id = 0;
 export const mockTagIndex: Mock = (config) => {
   const { kind, page } = config.params;
-  console.log("mockTagIndex", page);
-
   const per_page = 25;
   const count = 26;
   const createId = () => {
@@ -56,4 +54,32 @@ export const mockTagIndex: Mock = (config) => {
   }
 
   // return config;
+};
+
+export const mockItemCreate: Mock = (config) => {
+  /*   return [
+    422,
+    {
+      errors: {
+        tags_id: ["必须填写"],
+        amount: ["123333333333334"],
+      },
+    },
+  ]; */
+  return [
+    200,
+    {
+      resource: {
+        id: 469,
+        user_id: 254,
+        amount: 9900,
+        note: null,
+        tags_id: [370, 371],
+        happen_at: "2020-10-29T16:00:00.000Z",
+        created_at: "2022-06-16T16:17:48.559Z",
+        updated_at: "2022-06-16T16:17:48.559Z",
+        kind: "expenses",
+      },
+    },
+  ];
 };

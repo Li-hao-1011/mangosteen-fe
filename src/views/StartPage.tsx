@@ -10,9 +10,6 @@ import { Overlay, OverlayIcon } from "../shared/Overlay";
 import s from "./StartPage.module.scss";
 export const StartPage = defineComponent({
   setup: (props, context) => {
-    const onClick = () => {
-      console.log("hi");
-    };
     const refOverlayVisible = ref(false);
     const onClickMenu = () => {
       refOverlayVisible.value = !refOverlayVisible.value;

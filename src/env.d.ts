@@ -31,3 +31,23 @@ type Resources<T = any> = {
   };
   resources: T[];
 };
+
+type Resource<T> = {
+  resources: T;
+};
+
+type Item = {
+  resource: {
+    id: number;
+    user_id: number;
+    amount: number;
+    // note: null;
+    tags_id: number[];
+    happen_at: string;
+    created_at: string;
+    updated_at: string;
+    kind: "expenses" | "income";
+  };
+};
+
+type ResourceErrors = { errors: Record<string, string[]> };

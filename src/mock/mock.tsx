@@ -14,13 +14,13 @@ export const mockSession: Mock = (config) => {
   ];
 };
 
+let id = 0;
 export const mockTagIndex: Mock = (config) => {
   const { kind, page } = config.params;
   console.log("mockTagIndex", page);
 
   const per_page = 25;
   const count = 26;
-  let id = 0;
   const createId = () => {
     return id++;
   };

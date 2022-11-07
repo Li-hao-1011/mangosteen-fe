@@ -6,27 +6,26 @@ import { DatetimePicker, Popup } from "vant";
 
 export const InputPad = defineComponent({
   props: {
-    name: {
-      type: String as PropType<String>,
-    },
+    happenAt: String,
+    amount: Number,
   },
+  emits: ["update:happenAt", "update:amount"],
   setup: (props, context) => {
     const now = new Date();
-    const refDate = ref<Date>(now);
-    const refTempDate = ref<Date>(now);
     const refDatePickerVisible = ref(false);
     const showDatePicker = () => {
-      refTempDate.value = refDate.value;
+      // refTempDate.value = refDate.value;
       refDatePickerVisible.value = true;
     };
     const hideDatePicker = () => {
       refDatePickerVisible.value = false;
     };
     const setDate = (date: Date) => {
-      refDate.value = date;
+      // refDate.value = date;
+      context.emit("update:happenAt", date.toISOString());
       hideDatePicker();
     };
-    const refAmount = ref("0");
+    const refAmount = ref(props.amount ? (props.amount / 100).toString() : "0");
     const btnMap = [
       {
         text: "1",
@@ -78,7 +77,12 @@ export const InputPad = defineComponent({
           refAmount.value = "0";
         },
       },
-      { text: "提交", onClick: () => {} },
+      {
+        text: "提交",
+        onClick: () => {
+          context.emit("update:amount", parseFloat(refAmount.value) * 100);
+        },
+      },
     ];
     const appendText = (n: number | string) => {
       const nString = n.toString();
@@ -116,14 +120,14 @@ export const InputPad = defineComponent({
             <Icon name="date" class={s.icon} />
             <span>
               <span onClick={() => showDatePicker()}>
-                {new Time(refDate.value).format()}
+                {new Time(props.happenAt).format()}
               </span>
               <Popup
                 position="bottom"
                 v-model:show={refDatePickerVisible.value}
               >
                 <DatetimePicker
-                  v-model={refTempDate.value}
+                  v-model={props.happenAt}
                   type="date"
                   title="选择年月日"
                   onConfirm={setDate}

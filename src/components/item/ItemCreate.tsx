@@ -13,7 +13,10 @@ export const ItemCreate = defineComponent({
   },
   setup: (props, context) => {
     const refkind = ref("支出");
+    const refTagId = ref<number>();
     const onUpdateSelected = (name: string) => (refkind.value = name);
+    const refHappenAt = ref<string>(new Date().toISOString());
+    const refAmount = ref<number>(0);
     return () => (
       <MainLayout class={s.layout}>
         {{
@@ -28,14 +31,19 @@ export const ItemCreate = defineComponent({
               >
                 {/* <Tabs v-model:selected={refkind.value}> */}
                 <Tab name="支出">
-                  <Tags kind="expenses" />
+                  <div>{refHappenAt.value}</div>
+                  <div>{refAmount.value}</div>
+                  <Tags kind="expenses" v-model:selected={refTagId.value} />
                 </Tab>
                 <Tab name="收入">
-                  <Tags kind="income" />
+                  <Tags kind="income" v-model:selected={refTagId.value} />
                 </Tab>
               </Tabs>
               <div class={s.inputPad_wrapper}>
-                <InputPad></InputPad>
+                <InputPad
+                  v-model:happenAt={refHappenAt.value}
+                  v-model:amount={refAmount.value}
+                />
               </div>
             </div>
           ),

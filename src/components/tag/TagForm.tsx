@@ -1,7 +1,6 @@
-import { defineComponent, onMounted, PropType, reactive } from "vue";
+import { defineComponent, onMounted, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { Button } from "../../shared/Button";
-import { EmojiSelect } from "../../shared/EmojiSelect";
 import { Form, FormItem } from "../../shared/Form";
 import { http } from "../../shared/Http";
 import { onFormError } from "../../shared/onFormError";

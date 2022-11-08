@@ -1,5 +1,5 @@
 import { defineComponent, PropType, ref } from "vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 import { Button } from "../../shared/Button";
 import { http } from "../../shared/Http";
 import { Icon } from "../../shared/Icon";
@@ -15,6 +15,7 @@ export const Tags = defineComponent({
   },
   emits: ["update:selected"],
   setup: (props, context) => {
+    const router = useRouter();
     const { hasMore, tags, fetchTags } = useTags((page) => {
       return http.get<Resources<Tag>>("/tags", {
         kind: props.kind,
@@ -28,18 +29,20 @@ export const Tags = defineComponent({
 
     const timer = ref<number>();
     const currentTag = ref<HTMLDivElement>();
-    // let timer: number | undefined = undefined;
-    const onTouchstart = (e: TouchEvent) => {
+    const onTouchstart = (e: TouchEvent, tag: Tag) => {
       currentTag.value = e.currentTarget as HTMLDivElement;
       timer.value = setTimeout(() => {
-        onLongPress();
+        onLongPress(tag.id);
       }, 1000);
     };
     const onTouchend = (e: TouchEvent) => {
       clearTimeout(timer.value);
     };
-    const onLongPress = () => {
-      console.log("长安");
+    const onLongPress = (tagId: number) => {
+      console.log("长安", tagId);
+      router.push(
+        `/tags/${tagId}/edit?kind=${props.kind}&return_to=${router.currentRoute.value.fullPath}`
+      );
     };
     const onTouchmove = (e: TouchEvent) => {
       const pointedElement = document.elementFromPoint(
@@ -66,7 +69,7 @@ export const Tags = defineComponent({
             <div
               onClick={() => onSelect(tag)}
               class={[s.tag, props.selected === tag.id ? s.selected : ""]}
-              onTouchstart={onTouchstart}
+              onTouchstart={(e) => onTouchstart(e, tag)}
               onTouchend={onTouchend}
             >
               <div class={s.sign}>{tag.sign}</div>

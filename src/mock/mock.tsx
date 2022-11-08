@@ -85,5 +85,5 @@ export const mockItemCreate: Mock = (config) => {
 };
 
 export const mockTagCreate: Mock = (config) => {
-  return [200, {}];
+  return [200, config.data];
 };

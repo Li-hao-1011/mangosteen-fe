@@ -47,13 +47,13 @@ export const TagForm = defineComponent({
         const res = await http
           .post("/tags", formData, {
             params: {
-              _moke: "tagCreate",
+              _mock: "tagCreate",
             },
           })
           .catch((error) =>
             onFormError(error, (data) => Object.assign(errors, data.errors))
           );
-        console.log(res);
+        console.log("tagCreate", res);
         router.back();
       }
     };

@@ -87,3 +87,20 @@ export const mockItemCreate: Mock = (config) => {
 export const mockTagCreate: Mock = (config) => {
   return [200, config.data];
 };
+
+export const mockTagShow: Mock = (config) => {
+  console.log("config");
+  console.log(config);
+  let id = 10;
+  const createId = () => {
+    return id++;
+  };
+  const createTag = (n = 1, attrs?: any) => ({
+    id: createId(),
+    name: faker.lorem.word(),
+    sign: faker.internet.emoji(),
+    kind: "expenses",
+    ...attrs,
+  });
+  return [200, { resources: createTag() }];
+};

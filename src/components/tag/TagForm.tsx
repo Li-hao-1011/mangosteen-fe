@@ -1,4 +1,4 @@
-import { defineComponent, PropType, reactive } from "vue";
+import { defineComponent, onMounted, PropType, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { Button } from "../../shared/Button";
 import { EmojiSelect } from "../../shared/EmojiSelect";
@@ -9,9 +9,7 @@ import { hasError, Rules, validate } from "../../shared/validate";
 import s from "./Tag.module.scss";
 export const TagForm = defineComponent({
   props: {
-    name: {
-      type: String as PropType<String>,
-    },
+    id: Number,
   },
   setup: (props, context) => {
     const route = useRoute();
@@ -19,8 +17,9 @@ export const TagForm = defineComponent({
     if (!route.query.kind) {
       return () => <div>参数错误</div>;
     }
-    const formData = reactive({
-      kind: route.query.kind!.toString(),
+    const formData = reactive<Partial<Tag>>({
+      id: undefined,
+      kind: route.query.kind!.toString() as "expenses" | "income",
       name: "",
       sign: "",
     });
@@ -44,19 +43,34 @@ export const TagForm = defineComponent({
       });
       Object.assign(errors, validate(formData, rules));
       if (!hasError(errors)) {
-        const res = await http
-          .post("/tags", formData, {
-            params: {
-              _mock: "tagCreate",
-            },
-          })
-          .catch((error) =>
-            onFormError(error, (data) => Object.assign(errors, data.errors))
-          );
-        console.log("tagCreate", res);
+        const promise = formData.id
+          ? http.patch(`/tags/${1}`, formData, {
+              params: {
+                _mock: "TagEdit",
+              },
+            })
+          : http.post("/tags", formData, {
+              params: {
+                _mock: "tagCreate",
+              },
+            });
+
+        await promise.catch((error) =>
+          onFormError(error, (data) => Object.assign(errors, data.errors))
+        );
         router.back();
       }
     };
+    onMounted(async () => {
+      if (!props.id) {
+        return;
+      }
+      const res = await http.get<Resource<Tag>>(`/tags/${props.id}`, {
+        _mock: "tagShow",
+      });
+      console.log(res);
+      Object.assign(formData, res.data.resources);
+    });
 
     return () => (
       <Form onSubmit={onSubmit}>

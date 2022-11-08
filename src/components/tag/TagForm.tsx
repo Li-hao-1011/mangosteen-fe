@@ -43,7 +43,7 @@ export const TagForm = defineComponent({
       Object.assign(errors, validate(formData, rules));
       if (!hasError(errors)) {
         const promise = formData.id
-          ? http.patch(`/tags/${1}`, formData, {
+          ? http.patch(`/tags/${props.id}`, formData, {
               params: {
                 _mock: "TagEdit",
               },

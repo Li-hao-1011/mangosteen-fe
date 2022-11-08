@@ -83,3 +83,7 @@ export const mockItemCreate: Mock = (config) => {
     },
   ];
 };
+
+export const mockTagCreate: Mock = (config) => {
+  return [200, {}];
+};

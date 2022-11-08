@@ -1,6 +1,5 @@
 import { defineComponent, PropType } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import s from "./BackIcon.module.scss";
 import { Icon } from "./Icon";
 export const BackIcon = defineComponent({
   setup: (props, context) => {

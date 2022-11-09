@@ -30,6 +30,9 @@ export const ItemSummary = defineComponent({
         page: (page.value + 1).toString(),
         _mock: "itemIndex",
       });
+      console.log("response.data");
+      console.log(response.data);
+
       const { resources = [], pager } = response.data;
       items.value.push(...resources);
       hasMore.value =
@@ -78,11 +81,11 @@ export const ItemSummary = defineComponent({
               {items.value.map((item) => (
                 <li>
                   <div class={s.sign}>
-                    <span>{item.tags_id[0]}</span>
+                    <span>{item.tags![0].sign}</span>
                   </div>
                   <div class={s.text}>
                     <div class={s.tagAndAmount}>
-                      <span class={s.tag}>{item.tags_id[0]}</span>
+                      <span class={s.tag}>{item.tags![0].name}</span>
                       <span class={s.amount}>
                         ￥<Money value={item.amount} />
                       </span>

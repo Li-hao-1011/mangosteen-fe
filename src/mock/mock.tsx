@@ -5,6 +5,12 @@ type Mock = (config: AxiosRequestConfig) => [number, any];
 
 faker.setLocale("zh_CN");
 
+let id = 0;
+
+const createId = () => {
+  return id++;
+};
+
 export const mockSession: Mock = (config) => {
   return [
     200,
@@ -14,7 +20,6 @@ export const mockSession: Mock = (config) => {
   ];
 };
 
-let id = 0;
 export const mockTagIndex: Mock = (config) => {
   const { kind, page } = config.params;
   const per_page = 25;
@@ -89,8 +94,6 @@ export const mockTagCreate: Mock = (config) => {
 };
 
 export const mockTagShow: Mock = (config) => {
-  console.log("config");
-  console.log(config);
   let id = 10;
   const createId = () => {
     return id++;
@@ -103,4 +106,35 @@ export const mockTagShow: Mock = (config) => {
     ...attrs,
   });
   return [200, { resources: createTag() }];
+};
+
+export const mockItemIndex: Mock = (config) => {
+  const { kind, page } = config.params;
+  const per_page = 25;
+  const count = 26;
+  const createPaper = (page = 1) => ({
+    page,
+    per_page,
+    count,
+  });
+  const createItem = (n = 1, attrs?: any) =>
+    Array.from({ length: n }).map(() => ({
+      id: createId(),
+      user_id: createId(),
+      amount: Math.floor(Math.random() * 10000),
+      tags_id: [createId()],
+      happen_at: faker.date.past().toISOString(),
+      kind: kind,
+    }));
+  const createBody = (n = 1, attrs?: any) => ({
+    resources: createItem(n),
+    pager: createPaper(page),
+  });
+  if (!page || page === '1') {
+    return [200, createBody(25)];
+  } else if (page === '2') {
+    return [200, createBody(1)];
+  } else {
+    return [200, {}];
+  }
 };

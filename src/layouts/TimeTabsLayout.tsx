@@ -39,11 +39,17 @@ export const TimeTabsLayout = defineComponent({
         end: time.lastDayOfYear(),
       },
     ];
+    const tempTime = reactive<{ start?: string; end?: string }>({
+      start: new Time().format(),
+      end: new Time().format(),
+    });
     const customTime = reactive<{ start?: string; end?: string }>({});
+
     const refOverlayVisible = ref(false);
     const onSubmitCustomTime = (e: Event) => {
       e.preventDefault();
       refOverlayVisible.value = false;
+      Object.assign(customTime, tempTime);
     };
     const onSelect = (value: string) => {
       if (value === "自定义时间") {
@@ -97,12 +103,12 @@ export const TimeTabsLayout = defineComponent({
                     <Form onSubmit={onSubmitCustomTime}>
                       <FormItem
                         label="开始时间"
-                        v-model={customTime.start}
+                        v-model={tempTime.start}
                         type="date"
                       />
                       <FormItem
                         label="结束时间"
-                        v-model={customTime.end}
+                        v-model={tempTime.end}
                         type="date"
                       />
                       <FormItem>

@@ -130,11 +130,22 @@ export const mockItemIndex: Mock = (config) => {
     resources: createItem(n),
     pager: createPaper(page),
   });
-  if (!page || page === '1') {
+  if (!page || page === "1") {
     return [200, createBody(25)];
-  } else if (page === '2') {
+  } else if (page === "2") {
     return [200, createBody(1)];
   } else {
     return [200, {}];
   }
+};
+
+export const mockItemIndexBalance: Mock = (config) => {
+  return [
+    200,
+    {
+      expenses: 9900,
+      income: 9900,
+      balance: 0,
+    },
+  ];
 };

@@ -7,6 +7,7 @@ import axios, {
 import {
   mockItemCreate,
   mockItemIndex,
+  mockItemIndexBalance,
   mockSession,
   mockTagCreate,
   mockTagIndex,
@@ -97,7 +98,6 @@ const mock = (response: AxiosResponse) => {
     case "tagCreate":
       [response.status, response.data] = mockTagCreate(response.config);
     case "itemIndex":
-      console.log("itemIndex");
       [response.status, response.data] = mockItemIndex(response.config);
       return true;
     case "session":
@@ -105,6 +105,9 @@ const mock = (response: AxiosResponse) => {
       return true;
     case "tagShow":
       [response.status, response.data] = mockTagShow(response.config);
+      return true;
+    case "itemIndexBalance":
+      [response.status, response.data] = mockItemIndexBalance(response.config);
       return true;
   }
   return false;

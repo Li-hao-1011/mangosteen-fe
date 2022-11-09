@@ -4,7 +4,7 @@ import s from "./MainLayout.module.scss";
 export const MainLayout = defineComponent({
   props: {
     name: {
-      type: String as PropType<String>,
+      type: String as PropType<string>,
     },
   },
   setup: (props, context) => {

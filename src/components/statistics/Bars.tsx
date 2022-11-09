@@ -4,7 +4,7 @@ import s from "./Bars.module.scss";
 export const Bars = defineComponent({
   props: {
     name: {
-      type: String as PropType<String>,
+      type: String as PropType<string>,
     },
   },
   setup: (props, context) => {

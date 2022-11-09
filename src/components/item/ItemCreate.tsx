@@ -13,7 +13,7 @@ import { Tags } from "./Tags";
 export const ItemCreate = defineComponent({
   props: {
     name: {
-      type: String as PropType<String>,
+      type: String as PropType<string>,
     },
   },
   setup: (props, context) => {

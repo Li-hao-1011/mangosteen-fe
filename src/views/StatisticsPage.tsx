@@ -4,7 +4,7 @@ import { TimeTabsLayout } from "../layouts/TimeTabsLayout";
 export const StatisticsPage = defineComponent({
   props: {
     name: {
-      type: String as PropType<String>,
+      type: String as PropType<string>,
     },
   },
   setup: (props, context) => {

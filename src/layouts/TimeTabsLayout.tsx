@@ -9,12 +9,12 @@ import s from "./TimeTabsLayout.module.scss";
 const CustomComponent = defineComponent({
   props: {
     startDate: {
-      type: String as PropType<String>,
-      require: true,
+      type: String as PropType<string>,
+      required: true,
     },
     endDate: {
-      type: String as PropType<String>,
-      require: true,
+      type: String as PropType<string>,
+      required: true,
     },
   },
 });

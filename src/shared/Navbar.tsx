@@ -3,7 +3,7 @@ import s from "./Navbar.module.scss";
 export const Navbar = defineComponent({
   props: {
     name: {
-      type: String as PropType<String>,
+      type: String as PropType<string>,
     },
   },
   setup: (props, { slots }) => {

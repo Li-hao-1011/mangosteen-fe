@@ -4,7 +4,7 @@ import s from "./EmojiSelect.module.scss";
 export const EmojiSelect = defineComponent({
   props: {
     modelValue: {
-      type: String as PropType<String>,
+      type: String as PropType<string>,
     },
     onUpdateModelValue: {
       type: Function as PropType<(emoji: string) => void>,

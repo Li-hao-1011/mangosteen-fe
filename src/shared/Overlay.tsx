@@ -52,7 +52,7 @@ export const Overlay = defineComponent({
 export const OverlayIcon = defineComponent({
   props: {
     name: {
-      type: String as PropType<String>,
+      type: String as PropType<string>,
     },
   },
   setup: (props, context) => {

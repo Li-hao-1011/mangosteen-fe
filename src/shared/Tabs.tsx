@@ -3,7 +3,7 @@ import s from "./Tabs.module.scss";
 export const Tabs = defineComponent({
   props: {
     selected: {
-      type: String as PropType<String>,
+      type: String as PropType<string>,
       required: false,
     },
     /*     onUpdateSelected: {
@@ -71,8 +71,8 @@ export const Tabs = defineComponent({
 export const Tab = defineComponent({
   props: {
     name: {
-      type: String as PropType<String>,
-      require: true,
+      type: String as PropType<string>,
+      required: true,
     },
   },
   setup: (props, context) => {

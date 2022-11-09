@@ -13,7 +13,7 @@ import s from "./SignInPage.module.scss";
 export const SignInPage = defineComponent({
   props: {
     name: {
-      type: String as PropType<String>,
+      type: String as PropType<string>,
     },
   },
   setup: (props, context) => {

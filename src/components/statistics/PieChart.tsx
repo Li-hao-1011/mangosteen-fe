@@ -4,7 +4,7 @@ import s from "./PieChart.module.scss";
 export const PieChart = defineComponent({
   props: {
     name: {
-      type: String as PropType<String>,
+      type: String as PropType<string>,
     },
   },
   setup: (props, context) => {

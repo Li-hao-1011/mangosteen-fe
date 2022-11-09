@@ -23,7 +23,7 @@ export const Form = defineComponent({
 export const FormItem = defineComponent({
   props: {
     label: {
-      type: String as PropType<String>,
+      type: String as PropType<string>,
     },
     modelValue: {
       type: [String, Number],

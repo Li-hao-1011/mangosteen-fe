@@ -9,12 +9,12 @@ import { Bars } from "./Bars";
 export const Charts = defineComponent({
   props: {
     startDate: {
-      type: String as PropType<String>,
-      require: true,
+      type: String as PropType<string>,
+      required: true,
     },
     endDate: {
-      type: String as PropType<String>,
-      require: true,
+      type: String as PropType<string>,
+      required: true,
     },
   },
   setup: (props, context) => {

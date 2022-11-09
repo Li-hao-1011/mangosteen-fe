@@ -4,7 +4,7 @@ import s from "./LineChart.module.scss";
 export const LineChart = defineComponent({
   props: {
     name: {
-      type: String as PropType<String>,
+      type: String as PropType<string>,
     },
   },
   setup: (props, context) => {

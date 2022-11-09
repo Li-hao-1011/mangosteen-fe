@@ -10,11 +10,11 @@ const CustomComponent = defineComponent({
   props: {
     startDate: {
       type: String as PropType<string>,
-      required: true,
+      required: false,
     },
     endDate: {
       type: String as PropType<string>,
-      required: true,
+      required: false,
     },
   },
 });
@@ -39,10 +39,7 @@ export const TimeTabsLayout = defineComponent({
         end: time.lastDayOfYear(),
       },
     ];
-    const customTime = reactive({
-      start: new Time().format(),
-      end: new Time().format(),
-    });
+    const customTime = reactive<{ start?: string; end?: string }>({});
     const refOverlayVisible = ref(false);
     const onSubmitCustomTime = (e: Event) => {
       e.preventDefault();

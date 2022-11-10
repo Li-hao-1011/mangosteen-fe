@@ -33,7 +33,7 @@ type Resources<T = any> = {
 };
 
 type Resource<T> = {
-  resources: T;
+  resource: T;
 };
 
 type Item = {
@@ -43,7 +43,12 @@ type Item = {
   tags_id: number[];
   tags?: Tag[];
   happen_at: string;
-  kind: 'expenses' | 'income';
+  kind: "expenses" | "income";
 };
 
 type ResourceErrors = { errors: Record<string, string[]> };
+
+type User = {
+  id: number;
+  email: string;
+};

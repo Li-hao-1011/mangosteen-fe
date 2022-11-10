@@ -1,6 +1,8 @@
-import { defineComponent, PropType, ref } from "vue";
-import { RouterLink } from "vue-router";
+import { Dialog } from "vant";
+import { defineComponent, onMounted, PropType, ref } from "vue";
+import { RouterLink, useRoute } from "vue-router";
 import { Icon } from "./Icon";
+import { promiseMe } from "./me";
 import s from "./Overlay.module.scss";
 export const Overlay = defineComponent({
   props: {
@@ -13,13 +15,32 @@ export const Overlay = defineComponent({
     const close = () => {
       props.onClose?.();
     };
+    const route = useRoute();
+    const me = ref<User>();
+    onMounted(async () => {
+      const res = await promiseMe;
+      me.value = res?.data.resource;
+    });
+    const onSignOut = async () => {
+      await Dialog.confirm({ title: "确认", message: "您确定退出登录吗？" });
+      localStorage.removeItem("jwt");
+    };
     return () => (
       <>
         <div class={s.mask} onClick={close}></div>
         <div class={s.overlay}>
           <section class={s.current_user}>
-            <h2>未登录</h2>
-            <p>点击登录</p>
+            {me.value ? (
+              <div>
+                <h2 class={s.email}>{me.value.email}</h2>
+                <p onClick={onSignOut}>点击这里注销</p>
+              </div>
+            ) : (
+              <RouterLink to={`/sign_in?return_to=${route.fullPath}`}>
+                <h2>未登录</h2>
+                <p>点击登录</p>
+              </RouterLink>
+            )}
           </section>
           <nav>
             <ul class={s.action_list}>

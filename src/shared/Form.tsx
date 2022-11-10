@@ -124,7 +124,7 @@ export const FormItem = defineComponent({
               }
             >
               {props.options?.map((option) => (
-                <option key={option.value}>{option.text}</option>
+                <option value={option.value}>{option.text}</option>
               ))}
             </select>
           );

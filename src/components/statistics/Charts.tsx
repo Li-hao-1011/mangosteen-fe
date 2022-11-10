@@ -1,4 +1,4 @@
-import { computed, defineComponent, onMounted, PropType, ref } from 'vue'
+import { computed, defineComponent, onMounted, PropType, ref, watch } from 'vue'
 import { FormItem } from '../../shared/Form'
 import s from './Charts.module.scss'
 import { LineChart } from './LineChart'
@@ -44,7 +44,7 @@ export const Charts = defineComponent({
       })
     })
 
-    onMounted(async () => {
+    const fetchLineChartData = async () => {
       if (!props.startDate || !props.endDate) {
         return
       }
@@ -56,7 +56,10 @@ export const Charts = defineComponent({
         _mock: 'itemSummary'
       })
       lineChartData.value = response.data.groups
-    })
+    }
+
+    onMounted(fetchLineChartData)
+    watch(() => kind.value, fetchLineChartData)
 
     const pieChartData = ref<Data2>([])
     const betterPieChartData = computed<{ name: string; value: number }[]>(() =>
@@ -72,8 +75,7 @@ export const Charts = defineComponent({
         percent: Math.round((item.amount / total) * 100)
       }))
     })
-
-    onMounted(async () => {
+    const fetchPieChartData = async () => {
       if (!props.startDate || !props.endDate) {
         return
       }
@@ -85,7 +87,9 @@ export const Charts = defineComponent({
         _mock: 'itemSummary'
       })
       pieChartData.value = response.data.groups
-    })
+    }
+    onMounted(fetchPieChartData)
+    watch(() => kind.value, fetchPieChartData)
 
     return () => (
       <div class={s.wrapper}>

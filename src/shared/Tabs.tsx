@@ -1,4 +1,5 @@
 import { defineComponent, PropType } from "vue";
+import { ItemCreate } from "../components/item/ItemCreate";
 import s from "./Tabs.module.scss";
 export const Tabs = defineComponent({
   props: {
@@ -12,6 +13,10 @@ export const Tabs = defineComponent({
     }, */
     classPrefix: {
       type: String,
+    },
+    renderOnSelect: {
+      type: Boolean,
+      default: false,
     },
   },
   emits: ["update:selected"],
@@ -49,18 +54,26 @@ export const Tabs = defineComponent({
             ))}
           </ol>
           <div>
-            {/* {tabEls.find((item) => item.props?.name === props.selected)} */}
-            {tabEls.map((item) => (
-              <div
-                v-show={item.props?.name === props.selected}
-                /*  style={{
+            {props.renderOnSelect ? (
+              <div key={props.selected}>
+                {tabEls.find((item) => item.props?.name === props.selected)}
+              </div>
+            ) : (
+              <div>
+                {tabEls.map((item) => (
+                  <div
+                    v-show={item.props?.name === props.selected}
+                    /*  style={{
                   display:
                     item.props?.name === props.selected ? "block" : "none",
                 }} */
-              >
-                {item}
+                  >
+                    {item}
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
+            {/* {tabEls.find((item) => item.props?.name === props.selected)} */}
           </div>
         </div>
       );

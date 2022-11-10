@@ -10,19 +10,17 @@ export const Charts = defineComponent({
   props: {
     startDate: {
       type: String as PropType<string>,
-      required: true,
+      required: false,
     },
     endDate: {
       type: String as PropType<string>,
-      required: true,
+      required: false,
     },
   },
   setup: (props, context) => {
     const category = ref("支出");
     return () => (
       <div class={s.wrapper}>
-        {category.value}
-        <br />
         <FormItem
           label="类型"
           type="select"

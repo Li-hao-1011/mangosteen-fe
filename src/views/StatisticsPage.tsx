@@ -8,7 +8,8 @@ export const StatisticsPage = defineComponent({
     },
   },
   setup: (props, context) => {
-    // const;
-    return () => <TimeTabsLayout component={Charts}></TimeTabsLayout>;
+    return () => (
+      <TimeTabsLayout renderOnSelect={true} component={Charts}></TimeTabsLayout>
+    );
   },
 });

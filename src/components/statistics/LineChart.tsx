@@ -10,6 +10,8 @@ export const LineChart = defineComponent({
   setup: (props, context) => {
     const refLineChart = ref<HTMLDivElement>();
     onMounted(() => {
+      console.log("init");
+
       if (refLineChart.value === undefined) return;
       const myChart = echarts.init(refLineChart.value);
       const option = {

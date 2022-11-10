@@ -24,6 +24,10 @@ export const TimeTabsLayout = defineComponent({
       type: Object as PropType<typeof CustomComponent>,
       required: true,
     },
+    renderOnSelect: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup: (props, context) => {
     const refSelected = ref("本月");
@@ -70,6 +74,7 @@ export const TimeTabsLayout = defineComponent({
                 class={s.tabs}
                 classPrefix="customTabs"
                 onUpdate:selected={onSelect}
+                renderOnSelect={props.renderOnSelect}
               >
                 <Tab name="本月">
                   <props.component

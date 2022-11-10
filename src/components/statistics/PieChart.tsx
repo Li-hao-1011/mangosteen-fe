@@ -29,7 +29,8 @@ const defaultOption = {
 export const PieChart = defineComponent({
   props: {
     data: {
-      type: Array as PropType<{ name: string; value: number }[]>
+      type: Array as PropType<{ name: string; value: number }[]>,
+      required: true
     }
   },
   setup: (props, context) => {

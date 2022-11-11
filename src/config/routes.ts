@@ -18,62 +18,71 @@ import { TagEdit } from "../components/tag/TagEdit";
 import { SignInPage } from "../views/SignInPage";
 import { StatisticsPage } from "../views/StatisticsPage";
 import { http } from "../shared/Http";
+import { ComingSoon } from "../shared/ComingSoon";
 
 export const routes: RouteRecordRaw[] = [
-  { path: "/", redirect: "/welcome" },
+  { path: '/', redirect: '/welcome' },
   {
-    path: "/welcome",
+    path: '/welcome',
     component: Welcome,
     beforeEnter: (to, from, next) => {
       localStorage.getItem('SkipFeatures') === 'yes' ? next('/items') : next()
     },
     children: [
-      { path: "", redirect: "/welcome/1" },
+      { path: '', redirect: '/welcome/1' },
       {
-        path: "1",
-        name: "Welcome1",
-        components: { main: First, footer: FirstAction },
+        path: '1',
+        name: 'Welcome1',
+        components: { main: First, footer: FirstAction }
       },
       {
-        path: "2",
-        name: "Welcome2",
-        components: { main: Second, footer: SecondAction },
+        path: '2',
+        name: 'Welcome2',
+        components: { main: Second, footer: SecondAction }
       },
       {
-        path: "3",
-        name: "Welcome3",
-        components: { main: Third, footer: ThirdAction },
+        path: '3',
+        name: 'Welcome3',
+        components: { main: Third, footer: ThirdAction }
       },
       {
-        path: "4",
-        name: "Welcome4",
-        components: { main: Forth, footer: ForthAction },
-      },
-    ],
-  },
-  {
-    path: "/items",
-    component: ItemPage,
-    children: [
-      { path: "", redirect: "/items/list" },
-      { path: "create", name: "ItemCreate", component: ItemCreate },
-      { path: "list", name: "ItemList", component: ItemList },
+        path: '4',
+        name: 'Welcome4',
+        components: { main: Forth, footer: ForthAction }
+      }
     ]
   },
   {
-    path: "/tags",
+    path: '/items',
+    component: ItemPage,
+    children: [
+      { path: '', redirect: '/items/list' },
+      { path: 'create', name: 'ItemCreate', component: ItemCreate },
+      { path: 'list', name: 'ItemList', component: ItemList }
+    ]
+  },
+  {
+    path: '/tags',
     component: TagPage,
     children: [
-      { path: "create", component: TagCreate },
-      { path: ":id/edit", component: TagEdit },
-    ],
+      { path: 'create', component: TagCreate },
+      { path: ':id/edit', component: TagEdit }
+    ]
   },
   {
-    path: "/sign_in",
-    component: SignInPage,
+    path: '/sign_in',
+    component: SignInPage
   },
   {
-    path: "/statistics",
-    component: StatisticsPage,
+    path: '/statistics',
+    component: StatisticsPage
   },
-];
+  {
+    path: '/export',
+    component: ComingSoon
+  },
+  {
+    path: '/notify',
+    component: ComingSoon
+  }
+]

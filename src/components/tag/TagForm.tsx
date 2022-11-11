@@ -1,75 +1,69 @@
-import { defineComponent, onMounted, reactive } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { Button } from "../../shared/Button";
-import { Form, FormItem } from "../../shared/Form";
-import { http } from "../../shared/Http";
-import { onFormError } from "../../shared/onFormError";
-import { hasError, Rules, validate } from "../../shared/validate";
-import s from "./Tag.module.scss";
+import { defineComponent, onMounted, reactive } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { Button } from '../../shared/Button'
+import { Form, FormItem } from '../../shared/Form'
+import { http } from '../../shared/Http'
+import { onFormError } from '../../shared/onFormError'
+import { hasError, Rules, validate } from '../../shared/validate'
+import s from './Tag.module.scss'
 export const TagForm = defineComponent({
   props: {
-    id: Number,
+    id: Number
   },
   setup: (props, context) => {
-    const route = useRoute();
-    const router = useRouter();
+    const route = useRoute()
+    const router = useRouter()
     if (!route.query.kind) {
-      return () => <div>参数错误</div>;
+      return () => <div>参数错误</div>
     }
     const formData = reactive<Partial<Tag>>({
       id: undefined,
-      kind: route.query.kind!.toString() as "expenses" | "income",
-      name: "",
-      sign: "",
-    });
-    const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({});
+      kind: route.query.kind!.toString() as 'expenses' | 'income',
+      name: '',
+      sign: ''
+    })
+    const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({})
     const onSubmit = async (e: Event) => {
-      e.preventDefault();
+      e.preventDefault()
       const rules: Rules<typeof formData> = [
-        { key: "name", type: "required", message: "必填" },
+        { key: 'name', type: 'required', message: '必填' },
         {
-          key: "name",
-          type: "pattern",
+          key: 'name',
+          type: 'pattern',
           regex: /^.{1,4}$/,
-          message: "只能填 1 到 4 个字符",
+          message: '只能填 1 到 4 个字符'
         },
 
-        { key: "sign", type: "required", message: "必填" },
-      ];
+        { key: 'sign', type: 'required', message: '必填' }
+      ]
       Object.assign(errors, {
         name: [],
-        sign: [],
-      });
-      Object.assign(errors, validate(formData, rules));
+        sign: []
+      })
+      Object.assign(errors, validate(formData, rules))
       if (!hasError(errors)) {
         const promise = formData.id
           ? http.patch(`/tags/${props.id}`, formData, {
-              params: {
-                _mock: "TagEdit",
-              },
+              _mock: 'TagEdit'
             })
-          : http.post("/tags", formData, {
-              params: {
-                _mock: "tagCreate",
-              },
-            });
+          : http.post('/tags', formData, {
+              _mock: 'tagCreate'
+            })
 
-        await promise.catch((error) =>
-          onFormError(error, (data) => Object.assign(errors, data.errors))
-        );
-        router.back();
+        await promise.catch((error) => onFormError(error, (data) => Object.assign(errors, data.errors)))
+        router.back()
       }
-    };
+    }
     onMounted(async () => {
       if (!props.id) {
-        return;
+        return
       }
-      const res = await http.get<Resource<Tag>>(`/tags/${props.id}`, {
-        _mock: "tagShow",
-      });
-      console.log(res);
-      Object.assign(formData, res.data.resources);
-    });
+      const res = await http.get<Resource<Tag>>(`/tags/${props.id}`, {}, {
+        _mock: 'tagShow'
+      })
+      console.log(res)
+      Object.assign(formData, res.data.resource)
+    })
 
     return () => (
       <Form onSubmit={onSubmit}>
@@ -77,13 +71,13 @@ export const TagForm = defineComponent({
           label="标签名（最多4个字符）"
           type="text"
           v-model={formData.name}
-          error={errors["name"] ? errors["name"]?.[0] : "　"}
+          error={errors['name'] ? errors['name']?.[0] : '　'}
         ></FormItem>
         <FormItem
-          label={"符号 " + formData.sign}
+          label={'符号 ' + formData.sign}
           type="emojiSelect"
           v-model={formData.sign}
-          error={errors["sign"] ? errors["sign"][0] : "　"}
+          error={errors['sign'] ? errors['sign'][0] : '　'}
         ></FormItem>
         <FormItem>
           <p class={s.tips}>记账时长按标签即可进行编辑</p>
@@ -94,6 +88,6 @@ export const TagForm = defineComponent({
           </Button>
         </FormItem>
       </Form>
-    );
-  },
-});
+    )
+  }
+})

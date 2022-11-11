@@ -1,9 +1,5 @@
-import axios, {
-  AxiosError,
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-} from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { Toast } from 'vant'
 import {
   mockItemCreate,
   mockItemIndex,
@@ -12,18 +8,18 @@ import {
   mockSession,
   mockTagCreate,
   mockTagIndex,
-  mockTagShow,
-} from "../mock/mock";
+  mockTagShow
+} from '../mock/mock'
 
-type GetConfig = Omit<AxiosRequestConfig, "params" | "url" | "method">;
-type PostConfig = Omit<AxiosRequestConfig, "url" | "data" | "method">;
-type PatchConfig = Omit<AxiosRequestConfig, "url" | "data">;
-type DeleteConfig = Omit<AxiosRequestConfig, "params">;
+type GetConfig = Omit<AxiosRequestConfig, 'params' | 'url' | 'method'>
+type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'method'>
+type PatchConfig = Omit<AxiosRequestConfig, 'url' | 'data'>
+type DeleteConfig = Omit<AxiosRequestConfig, 'params'>
 
 export class Http {
-  instance: AxiosInstance;
+  instance: AxiosInstance
   constructor(baseURL: string) {
-    this.instance = axios.create({ baseURL });
+    this.instance = axios.create({ baseURL })
   }
   //read
   get<R = unknown>(
@@ -36,137 +32,131 @@ export class Http {
       ...config,
       url,
       params: query,
-      method: "get",
-    });
+      method: 'get'
+    })
   }
   // create
-  post<R = unknown>(
-    url: string,
-    data: Record<string, JSONValue>,
-    config?: PostConfig
-  ) {
+  post<R = unknown>(url: string, data: Record<string, JSONValue>, config?: PostConfig) {
     return this.instance.request<R>({
       ...config,
       url,
       data,
-      method: "post",
-    });
+      method: 'post'
+    })
   }
   // update
-  patch<R = unknown>(
-    url: string,
-    data: Record<string, JSONValue>,
-    config?: PatchConfig
-  ) {
+  patch<R = unknown>(url: string, data: Record<string, JSONValue>, config?: PatchConfig) {
     return this.instance.request<R>({
       ...config,
       url,
       data,
-      method: "patch",
-    });
+      method: 'patch'
+    })
   }
   // destory
-  delete<R = unknown>(
-    url: string,
-    query?: Record<string, string>,
-    config?: DeleteConfig
-  ) {
+  delete<R = unknown>(url: string, query?: Record<string, string>, config?: DeleteConfig) {
     return this.instance.request<R>({
       ...config,
       url,
       params: query,
-      method: "delete",
-    });
+      method: 'delete'
+    })
   }
 }
 
 /* mock */
 const mock = (response: AxiosResponse) => {
-  if (
-    location.hostname !== "localhost" &&
-    location.hostname !== "127.0.0.1" &&
-    location.hostname !== "192.168.3.57"
-  ) {
-    return false;
+  if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && location.hostname !== '192.168.3.57') {
+    return false
   }
-  switch (response.config?.params?._mock) {
-    case "tagIndex":
-      [response.status, response.data] = mockTagIndex(response.config);
-      return true;
-    case "itemCreate":
-      [response.status, response.data] = mockItemCreate(response.config);
-      return true;
-    case "tagCreate":
-      [response.status, response.data] = mockTagCreate(response.config);
-    case "itemIndex":
-      [response.status, response.data] = mockItemIndex(response.config);
-      return true;
-    case "session":
-      [response.status, response.data] = mockSession(response.config);
-      return true;
-    case "tagShow":
-      [response.status, response.data] = mockTagShow(response.config);
-      return true;
-    case "itemIndexBalance":
-      [response.status, response.data] = mockItemIndexBalance(response.config);
-      return true;
-    case "itemSummary":
-      [response.status, response.data] = mockItemSummary(response.config);
-      return true;
+  switch (response.config?._mock) {
+    case 'tagIndex':
+      ;[response.status, response.data] = mockTagIndex(response.config)
+      return true
+    case 'itemCreate':
+      ;[response.status, response.data] = mockItemCreate(response.config)
+      return true
+    case 'tagCreate':
+      ;[response.status, response.data] = mockTagCreate(response.config)
+    case 'itemIndex':
+      ;[response.status, response.data] = mockItemIndex(response.config)
+      return true
+    case 'session':
+      ;[response.status, response.data] = mockSession(response.config)
+      return true
+    case 'tagShow':
+      ;[response.status, response.data] = mockTagShow(response.config)
+      return true
+    case 'itemIndexBalance':
+      ;[response.status, response.data] = mockItemIndexBalance(response.config)
+      return true
+    case 'itemSummary':
+      ;[response.status, response.data] = mockItemSummary(response.config)
+      return true
   }
-  return false;
-};
+  return false
+}
 
-export const http = new Http("/api/v1");
+export const http = new Http('/api/v1')
 
 http.instance.interceptors.request.use((config) => {
-  const jwt = localStorage.getItem("jwt");
+  const jwt = localStorage.getItem('jwt')
   if (jwt) {
-    config.headers!.Authorization = `Bearer ${jwt}`;
+    config.headers!.Authorization = `Bearer ${jwt}`
   }
-  return config;
-});
+  if (config._autoLoading === true) {
+    Toast.loading({
+      message: '加载中...',
+      forbidClick: true,
+      duration: 0
+    })
+  }
+  return config
+})
+http.instance.interceptors.response.use(
+  (response) => {
+    if (response.config._autoLoading === true) {
+      Toast.clear()
+    }
+    return response
+  },
+  (errors) => {
+    if (errors.config._autoLoading === true) {
+      Toast.clear()
+    }
+    throw errors
+  }
+)
 
 http.instance.interceptors.response.use(
   (response) => {
-    mock(response);
+    mock(response)
     if (response.status >= 400) {
-      throw { response };
+      throw { response }
     }
-    return response;
+    return response
   },
   (error) => {
-    mock(error.response);
+    mock(error.response)
     if (error.response.status >= 400) {
-      throw error;
+      throw error
     } else {
-      return error.response;
-    }
-    if (error.response) {
-      const axiosError = error as AxiosError;
-      if (axiosError.response?.status === 429) {
-        alert("你太频繁了");
-      }
-      if (mock(error.response)) {
-        return error.response;
-      } else {
-        throw error;
-      }
+      return error.response
     }
   }
-);
+)
 
 http.instance.interceptors.response.use(
   (response) => {
-    return response;
+    return response
   },
   (error) => {
     if (error.response) {
-      const axiosError = error as AxiosError;
+      const axiosError = error as AxiosError
       if (axiosError.response?.status === 429) {
-        alert("你太频繁了");
+        alert('你太频繁了')
       }
     }
-    throw error;
+    throw error
   }
-);
+)

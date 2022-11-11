@@ -1,61 +1,56 @@
-import { defineComponent, PropType, ref } from "vue";
-import { RouterLink, useRouter } from "vue-router";
-import { Button } from "../../shared/Button";
-import { http } from "../../shared/Http";
-import { Icon } from "../../shared/Icon";
-import { useTags } from "../../shared/useTags";
-import s from "./Tags.module.scss";
+import { defineComponent, PropType, ref } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
+import { Button } from '../../shared/Button'
+import { http } from '../../shared/Http'
+import { Icon } from '../../shared/Icon'
+import { useTags } from '../../shared/useTags'
+import s from './Tags.module.scss'
 export const Tags = defineComponent({
   props: {
     kind: {
       type: String as PropType<string>,
-      required: true,
+      required: true
     },
-    selected: Number,
+    selected: Number
   },
-  emits: ["update:selected"],
+  emits: ['update:selected'],
   setup: (props, context) => {
-    const router = useRouter();
+    const router = useRouter()
     const { hasMore, tags, fetchTags } = useTags((page) => {
-      return http.get<Resources<Tag>>("/tags", {
-        kind: props.kind,
-        _mock: "tagIndex",
-        page: (page + 1).toString(),
-      });
-    });
+      return http.get<Resources<Tag>>(
+        '/tags',
+        {
+          kind: props.kind,
+          page: (page + 1).toString()
+        },
+        { _mock: 'tagIndex' }
+      )
+    })
     const onSelect = (tag: Tag) => {
-      context.emit("update:selected", tag.id);
-    };
+      context.emit('update:selected', tag.id)
+    }
 
-    const timer = ref<number>();
-    const currentTag = ref<HTMLDivElement>();
+    const timer = ref<number>()
+    const currentTag = ref<HTMLDivElement>()
     const onTouchstart = (e: TouchEvent, tag: Tag) => {
-      currentTag.value = e.currentTarget as HTMLDivElement;
+      currentTag.value = e.currentTarget as HTMLDivElement
       timer.value = setTimeout(() => {
-        onLongPress(tag.id);
-      }, 1000);
-    };
+        onLongPress(tag.id)
+      }, 1000)
+    }
     const onTouchend = (e: TouchEvent) => {
-      clearTimeout(timer.value);
-    };
+      clearTimeout(timer.value)
+    }
     const onLongPress = (tagId: number) => {
-      console.log("长安", tagId);
-      router.push(
-        `/tags/${tagId}/edit?kind=${props.kind}&return_to=${router.currentRoute.value.fullPath}`
-      );
-    };
+      console.log('长安', tagId)
+      router.push(`/tags/${tagId}/edit?kind=${props.kind}&return_to=${router.currentRoute.value.fullPath}`)
+    }
     const onTouchmove = (e: TouchEvent) => {
-      const pointedElement = document.elementFromPoint(
-        e.touches[0].clientX,
-        e.touches[0].clientY
-      );
-      if (
-        currentTag.value !== pointedElement &&
-        currentTag.value?.contains(pointedElement) === false
-      ) {
-        clearTimeout(timer.value);
+      const pointedElement = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY)
+      if (currentTag.value !== pointedElement && currentTag.value?.contains(pointedElement) === false) {
+        clearTimeout(timer.value)
       }
-    };
+    }
     return () => (
       <>
         <div class={s.tags_wrapper} onTouchmove={onTouchmove}>
@@ -68,7 +63,7 @@ export const Tags = defineComponent({
           {tags.value.map((tag) => (
             <div
               onClick={() => onSelect(tag)}
-              class={[s.tag, props.selected === tag.id ? s.selected : ""]}
+              class={[s.tag, props.selected === tag.id ? s.selected : '']}
               onTouchstart={(e) => onTouchstart(e, tag)}
               onTouchend={onTouchend}
             >
@@ -81,7 +76,7 @@ export const Tags = defineComponent({
           {hasMore.value ? (
             <Button
               onClick={() => {
-                fetchTags();
+                fetchTags()
               }}
               class={s.laodMore}
             >
@@ -92,6 +87,6 @@ export const Tags = defineComponent({
           )}
         </div>
       </>
-    );
-  },
-});
+    )
+  }
+})

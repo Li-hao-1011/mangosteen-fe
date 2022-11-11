@@ -79,13 +79,18 @@ export const Charts = defineComponent({
       if (!props.startDate || !props.endDate) {
         return
       }
-      const response = await http.get<{ groups: Data2; summary: number }>('/items/summary', {
-        happen_after: props.startDate,
-        happen_before: props.endDate,
-        kind: kind.value,
-        group_by: 'tag_id',
-        _mock: 'itemSummary'
-      })
+      const response = await http.get<{ groups: Data2; summary: number }>(
+        '/items/summary',
+        {
+          happen_after: props.startDate,
+          happen_before: props.endDate,
+          kind: kind.value,
+          group_by: 'tag_id'
+        },
+        {
+          _mock: 'itemSummary'
+        }
+      )
       pieChartData.value = response.data.groups
     }
     onMounted(fetchPieChartData)

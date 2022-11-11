@@ -9,11 +9,11 @@ import s from "./Welcome.module.scss";
 import { useSwipe } from "../hooks/useSwipr";
 import { throttle } from "../shared/throttle";
 const pushMap: Record<string, string> = {
-  Welcome1: "/welcome/2",
-  Welcome2: "/welcome/3",
-  Welcome3: "/welcome/4",
-  Welcome4: "/start",
-};
+  Welcome1: '/welcome/2',
+  Welcome2: '/welcome/3',
+  Welcome3: '/welcome/4',
+  Welcome4: '/items'
+}
 export const Welcome = defineComponent({
   setup: () => {
     const router = useRouter();

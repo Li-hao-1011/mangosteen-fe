@@ -1,37 +1,41 @@
-import { Dialog } from "vant";
-import { defineComponent } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { MainLayout } from "../../layouts/MainLayout";
-import { BackIcon } from "../../shared/BackIcon";
-import { Button } from "../../shared/Button";
-import { http } from "../../shared/Http";
-import s from "./Tag.module.scss";
-import { TagForm } from "./TagForm";
+import { Dialog } from 'vant'
+import { defineComponent } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { MainLayout } from '../../layouts/MainLayout'
+import { BackIcon } from '../../shared/BackIcon'
+import { Button } from '../../shared/Button'
+import { http } from '../../shared/Http'
+import s from './Tag.module.scss'
+import { TagForm } from './TagForm'
 export const TagEdit = defineComponent({
   setup: (props) => {
-    const route = useRoute();
-    const router = useRouter();
+    const route = useRoute()
+    const router = useRouter()
 
-    const numberId = parseInt(route.params.id.toString());
+    const numberId = parseInt(route.params.id.toString())
     if (Number.isNaN(numberId)) {
-      return <div>Id 不存在</div>;
+      return <div>Id 不存在</div>
     }
     const onDelete = async (options?: { withItems: boolean }) => {
-      await Dialog.confirm({ title: "确认", message: "你真的要删除吗" });
+      await Dialog.confirm({ title: '确认', message: '你真的要删除吗' })
       await http
-        .delete(`/tags/${numberId}`, {
-          withItems: options?.withItems ? "true" : "false",
-        })
-        .catch(onError);
-      router.back();
-    };
+        .delete(
+          `/tags/${numberId}`,
+          {
+            withItems: options?.withItems ? 'true' : 'false'
+          },
+          { _autoLoading: true }
+        )
+        .catch(onError)
+      router.back()
+    }
     const onError = () => {
-      Dialog.alert({ title: "提示", message: "删除失败" });
-    };
+      Dialog.alert({ title: '提示', message: '删除失败' })
+    }
     return () => (
       <MainLayout>
         {{
-          title: () => "编辑标签",
+          title: () => '编辑标签',
           icon: () => <BackIcon />,
           default: () => (
             <>
@@ -40,7 +44,7 @@ export const TagEdit = defineComponent({
                 <Button
                   level="danger"
                   onClick={() => {
-                    onDelete();
+                    onDelete()
                   }}
                   class={s.removeTags}
                 >
@@ -49,7 +53,7 @@ export const TagEdit = defineComponent({
                 <Button
                   level="danger"
                   onClick={() => {
-                    onDelete({ withItems: true });
+                    onDelete({ withItems: true })
                   }}
                   class={s.removeTagsAndItems}
                 >
@@ -57,9 +61,9 @@ export const TagEdit = defineComponent({
                 </Button>
               </div>
             </>
-          ),
+          )
         }}
       </MainLayout>
-    );
-  },
-});
+    )
+  }
+})

@@ -88,7 +88,8 @@ export const Charts = defineComponent({
           group_by: 'tag_id'
         },
         {
-          _mock: 'itemSummary'
+          _mock: 'itemSummary',
+          _autoLoading: true
         }
       )
       pieChartData.value = response.data.groups

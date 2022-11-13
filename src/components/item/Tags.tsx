@@ -1,42 +1,46 @@
-import { defineComponent, onUpdated, PropType, ref } from 'vue';
-import { RouterLink, useRouter } from 'vue-router';
-import { Button } from '../../shared/Button';
-import { http } from '../../shared/Http';
-import { Icon } from '../../shared/Icon';
-import { useTags } from '../../shared/useTags';
-import s from './Tags.module.scss';
+import { defineComponent, onUpdated, PropType, ref } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
+import { Button } from '../../shared/Button'
+import { http } from '../../shared/Http'
+import { Icon } from '../../shared/Icon'
+import { useTags } from '../../shared/useTags'
+import s from './Tags.module.scss'
 export const Tags = defineComponent({
   props: {
     kind: {
       type: String as PropType<string>,
-      required: true,
+      required: true
     },
-    selected: Number,
+    selected: Number
   },
   emits: ['update:selected'],
   setup: (props, context) => {
     const { tags, hasMore, page, fetchTags } = useTags((page) => {
-      return http.get<Resources<Tag>>('/tags', {
-        kind: props.kind,
-        page: page + 1,
-      }, {
-        _mock: 'tagIndex',
-        _autoLoading: true,
-      });
-    });
+      return http.get<Resources<Tag>>(
+        '/tags',
+        {
+          kind: props.kind,
+          page: page + 1
+        },
+        {
+          _mock: 'tagIndex',
+          _autoLoading: true
+        }
+      )
+    })
     const onSelect = (tag: Tag) => {
-      context.emit('update:selected', tag.id);
-    };
+      context.emit('update:selected', tag.id)
+    }
     const timer = ref<number>()
     const currentTag = ref<HTMLDivElement>()
 
     const router = useRouter()
-    const onLongPress = (tagId: Tag['id'])=>{
-      router.push(`/tags/${tagId}/edit?kind=${props.kind}&return_to=${router.currentRoute.value.fullPath}`)
+    const onLongPress = (tagId: Tag['id']) => {
+      router.push(`/tags/${tagId}/edit?kind=${props.kind}`)
     }
     const onTouchStart = (e: TouchEvent, tag: Tag) => {
       currentTag.value = e.currentTarget as HTMLDivElement
-      timer.value = setTimeout(()=>{
+      timer.value = setTimeout(() => {
         onLongPress(tag.id)
       }, 500)
     }
@@ -45,8 +49,7 @@ export const Tags = defineComponent({
     }
     const onTouchMove = (e: TouchEvent) => {
       const pointedElement = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY)
-      if(currentTag.value !== pointedElement &&
-        currentTag.value?.contains(pointedElement) === false){
+      if (currentTag.value !== pointedElement && currentTag.value?.contains(pointedElement) === false) {
         clearTimeout(timer.value)
       }
     }
@@ -63,7 +66,7 @@ export const Tags = defineComponent({
             <div
               class={[s.tag, props.selected === tag.id ? s.selected : '']}
               onClick={() => onSelect(tag)}
-              onTouchstart={(e)=>onTouchStart(e, tag)}
+              onTouchstart={(e) => onTouchStart(e, tag)}
               onTouchend={onTouchEnd}
             >
               <div class={s.sign}>{tag.sign}</div>
@@ -81,6 +84,6 @@ export const Tags = defineComponent({
           )}
         </div>
       </>
-    );
-  },
-});
+    )
+  }
+})

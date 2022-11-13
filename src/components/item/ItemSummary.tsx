@@ -33,10 +33,6 @@ export const ItemSummary = defineComponent({
     watch(
       () => [props.startDate, props.endDate],
       () => {
-        // items.value = []
-        // hasMore.value = false
-        // page.value = 0
-        // fetchItems()
         itemStore.$reset()
         itemStore.fetchItems(props.startDate, props.endDate)
       }

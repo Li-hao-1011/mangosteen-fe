@@ -26,17 +26,17 @@
       border-color: var(--error-color);
     }
   }
-  &.validationCode_input {
-    flex-grow: 0;
-    width: 9em;
-  }
-  &.validationCode_button {
-    margin-left: 16px;
-  }
-  &.select {
+  &.select{
     border: 1px solid var(--input-border-color);
     border-radius: var(--input-radius);
     padding: 0 8px;
+  }
+  &.validationCodeInput {
+    flex-grow: 0;
+    width: 9em;
+  }
+  &.validationCodeButton {
+    margin-left: 16px;
   }
 
   &_name {

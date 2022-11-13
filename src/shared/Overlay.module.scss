@@ -7,9 +7,14 @@
   width: 100%;
   height: calc(100% - var(--top-safe-area-height));
 }
+.email{
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .overlay {
   position: fixed;
-  z-index: calc(var(--z-index-overlay));
+  z-index: calc(var(--z-index-overlay) + 1);
   background: var(--overlay-bg);
   top: var(--top-safe-area-height);
   left: 0;
@@ -17,7 +22,7 @@
   height: calc(100% - var(--top-safe-area-height));
   color: var(--text);
 }
-.current_user {
+.currentUser {
   padding: 32px 16px;
   background: var(--overlay-user-bg);
   color: var(--overlay-user-text);
@@ -35,15 +40,9 @@
     margin-right: 12px;
   }
 }
-
-.icon {
+.icon{
   width: 30px;
   height: 30px;
   position: relative;
   top: 2px;
-}
-.email{
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }

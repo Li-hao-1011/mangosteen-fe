@@ -10,10 +10,9 @@ import { Time } from '../../shared/time'
 const DAY = 24 * 3600 * 1000
 
 type Data1Item = { happen_at: string; amount: number }
-type Data2Item = { tag_id: number; tag: Tag; amount: number }
 type Data1 = Data1Item[]
+type Data2Item = { tag_id: number; tag: Tag; amount: number }
 type Data2 = Data2Item[]
-
 export const Charts = defineComponent({
   props: {
     startDate: {
@@ -27,75 +26,65 @@ export const Charts = defineComponent({
   },
   setup: (props, context) => {
     const kind = ref('expenses')
-    const lineChartData = ref<Data1>([])
-    const betterLineChartData = computed<[string, number][]>(() => {
+    const data1 = ref<Data1>([])
+    const betterData1 = computed<[string, number][]>(() => {
       if (!props.startDate || !props.endDate) {
         return []
       }
-
       const diff = new Date(props.endDate).getTime() - new Date(props.startDate).getTime()
       const n = diff / DAY + 1
       return Array.from({ length: n }).map((_, i) => {
         const time = new Time(props.startDate + 'T00:00:00.000+0800').add(i, 'day').getTimestamp()
-
-        const item = lineChartData.value[0]
-        const amount = item && new Date(item.happen_at).getTime() === time ? lineChartData.value.shift()!.amount : 0
+        const item = data1.value[0]
+        const amount = item && new Date(item.happen_at).getTime() === time ? data1.value.shift()!.amount : 0
         return [new Date(time).toISOString(), amount]
       })
     })
 
-    const fetchLineChartData = async () => {
-      if (!props.startDate || !props.endDate) {
-        return
-      }
+    const fetchData1 = async () => {
       const response = await http.get<{ groups: Data1; summary: number }>('/items/summary', {
         happen_after: props.startDate,
         happen_before: props.endDate,
         kind: kind.value,
         group_by: 'happen_at',
-        _mock: 'itemSummary'
+      }, {
+        _mock: 'itemSummary',
+        _autoLoading: true,
       })
-      lineChartData.value = response.data.groups
+      data1.value = response.data.groups
     }
+    onMounted(fetchData1)
+    watch(() => kind.value, fetchData1)
 
-    onMounted(fetchLineChartData)
-    watch(() => kind.value, fetchLineChartData)
-
-    const pieChartData = ref<Data2>([])
-    const betterPieChartData = computed<{ name: string; value: number }[]>(() =>
-      pieChartData.value.map((item) => ({
+    const data2 = ref<Data2>([])
+    const betterData2 = computed<{ name: string; value: number }[]>(() =>
+      data2.value.map((item) => ({
         name: item.tag.name,
         value: item.amount
       }))
     )
-    const betterBarsChartData = computed<{ tag: Tag; percent: number; amount: number }[]>(() => {
-      const total = pieChartData.value.reduce((sum, item) => sum + item.amount, 0)
-      return pieChartData.value.map((item) => ({
+
+    const betterData3 = computed<{ tag: Tag; amount: number; percent: number }[]>(() => {
+      const total = data2.value.reduce((sum, item) => sum + item.amount, 0)
+      return data2.value.map((item) => ({
         ...item,
         percent: Math.round((item.amount / total) * 100)
       }))
     })
-    const fetchPieChartData = async () => {
-      if (!props.startDate || !props.endDate) {
-        return
-      }
-      const response = await http.get<{ groups: Data2; summary: number }>(
-        '/items/summary',
-        {
-          happen_after: props.startDate,
-          happen_before: props.endDate,
-          kind: kind.value,
-          group_by: 'tag_id'
-        },
-        {
-          _mock: 'itemSummary',
-          _autoLoading: true
-        }
-      )
-      pieChartData.value = response.data.groups
+
+    const fetchData2 = async ()=>{
+      const response = await http.get<{ groups: Data2; summary: number }>('/items/summary', {
+        happen_after: props.startDate,
+        happen_before: props.endDate,
+        kind: kind.value,
+        group_by: 'tag_id',
+      }, {
+        _mock: 'itemSummary'
+      })
+      data2.value = response.data.groups
     }
-    onMounted(fetchPieChartData)
-    watch(() => kind.value, fetchPieChartData)
+    onMounted(fetchData2)
+    watch(() => kind.value, fetchData2)
 
     return () => (
       <div class={s.wrapper}>
@@ -108,9 +97,9 @@ export const Charts = defineComponent({
           ]}
           v-model={kind.value}
         />
-        <LineChart data={betterLineChartData.value} />
-        <PieChart data={betterPieChartData.value} />
-        <Bars data={betterBarsChartData.value} />
+        <LineChart data={betterData1.value} />
+        <PieChart data={betterData2.value} />
+        <Bars data={betterData3.value} />
       </div>
     )
   }

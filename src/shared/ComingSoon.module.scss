@@ -1,13 +1,12 @@
-.text {
+.text{
   text-align: center;
   font-size: 32px;
-  margin-bottom: 32px;
 }
 
-.pig {
+.pig{
   width: 128px;
   height: 128px;
-  &_wrapper {
+  &_wrapper{
     padding: 120px 0;
   }
 }

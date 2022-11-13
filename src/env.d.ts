@@ -8,47 +8,49 @@ declare module "*.vue" {
 }
 
 type JSONValue =
-  | string
-  | number
   | null
   | boolean
+  | string
+  | number
   | JSONValue[]
-  | { [key: string]: JSONValue };
+  | Record<string, JSONValue>;
 
 type Tag = {
   id: number;
   user_id: number;
   name: string;
   sign: string;
-  kind: "expenses" | "income";
+  kind: 'expenses' | 'income';
 };
+type Item = {
+  id: number;
+  user_id: number;
+  amount: number;
+  tag_ids: number[];
+  tags?: Tag[],
+  happen_at: string;
+  kind: 'expenses' | 'income';
+};
+type User = {
+  id: number;
+  email: string;
+}
 
 type Resources<T = any> = {
+  resources: T[];
   pager: {
     page: number;
     per_page: number;
     count: number;
   };
-  resources: T[];
 };
 
 type Resource<T> = {
   resource: T;
 };
 
-type Item = {
-  id: number;
-  user_id: number;
-  amount: number;
-  tags_id: number[];
-  tags?: Tag[];
-  happen_at: string;
-  kind: "expenses" | "income";
+type ResourceError = {
+  errors: Record<string, string[]>;
 };
 
-type ResourceErrors = { errors: Record<string, string[]> };
-
-type User = {
-  id: number;
-  email: string;
-};
+type FormErrors<T> = {[K in keyof typeof T]: string[]}

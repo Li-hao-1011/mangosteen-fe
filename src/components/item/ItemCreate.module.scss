@@ -3,7 +3,6 @@
   flex-direction: column;
   height: calc(100vh - 88px);
 }
-
 .tabs {
   flex-grow: 1;
   flex-shrink: 1;
@@ -17,3 +16,4 @@
 .createTag {
   fill: var(--main);
 }
+

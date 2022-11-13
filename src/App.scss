@@ -1,5 +1,5 @@
-@import "./assets/styleSheets/reset.scss";
-@import "./assets/styleSheets/vars.scss";
+@import "./assets/stylesheets/reset.scss";
+@import "./assets/stylesheets/vars.scss";
 
 body {
   font-family: -apple-system, "Noto Sans", "Helvetica Neue", Helvetica,
@@ -11,13 +11,12 @@ body {
   color: #333;
 }
 
-// 问题
-// ::-webkit-scrollbar {
-//    visibility: hidden;
-// }
+::webkit-scrollbar {
+  visibility: hidden;
+}
 
 .customTabs_tabs_nav {
-  justify-content: flex-start !important;
+  justify-content: flex-start;
   & > &_item {
     flex-grow: 0;
     padding-left: 16px;

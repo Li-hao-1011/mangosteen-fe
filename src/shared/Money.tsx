@@ -1,4 +1,4 @@
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType } from 'vue'
 export const Money = defineComponent({
   props: {
     value: {
@@ -7,22 +7,21 @@ export const Money = defineComponent({
     },
   },
   setup: (props, context) => {
-    return () => <span>{addZero(props.value / 100)}</span>;
+    return () => <span>{addZero(props.value / 100)}</span>
   },
-});
+})
 
 const addZero = (n: number) => {
-  const nString = n.toString();
-  const dotIndex = nString.indexOf(".");
+  const nString = n.toString()
+  const dotIndex = nString.indexOf('.')
   if (dotIndex < 0) {
-    return n + ".00";
+    return nString + '.00'
   } else if (nString.substring(dotIndex).length === 2) {
-    return nString + "0";
+    return nString + '0'
   } else {
-    return nString;
+    return nString
   }
-};
-
+}
 export const getMoney = (n: number) => {
-  return addZero(n / 100);
-};
+  return addZero(n / 100)
+}

@@ -1,19 +1,15 @@
-// 节流函数
-export const throttle = <T extends (...args: any[]) => any>(
-  fn: T,
-  time: number
-) => {
-  let result: ReturnType<T>;
-  let timer: number | undefined = undefined;
+export const throttle = <T extends ((...args: unknown[]) => any)>(fn: T, time: number) => {
+  let timer: number | undefined = undefined
+  let result: ReturnType<T>
   return (...args: Parameters<T>) => {
     if (timer) {
-      return result;
+      return result
     } else {
-      result = fn(...args);
+      result = fn(...args)
       timer = setTimeout(() => {
-        timer = undefined;
-      }, time);
-      return result;
+        timer = undefined
+      }, time)
+      return result
     }
-  };
-};
+  }
+}

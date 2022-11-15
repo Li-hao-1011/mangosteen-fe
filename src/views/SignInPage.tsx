@@ -12,6 +12,7 @@ import { Icon } from '../shared/Icon'
 import { hasError, validate } from '../shared/validate'
 import { useMeStore } from '../stores/useMeStore'
 import s from './SignInPage.module.scss'
+
 export const SignInPage = defineComponent({
   setup: (props, context) => {
     const meStore = useMeStore()
@@ -114,3 +115,5 @@ export const SignInPage = defineComponent({
     )
   }
 })
+
+export default SignInPage

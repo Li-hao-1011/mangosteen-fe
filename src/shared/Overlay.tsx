@@ -25,8 +25,12 @@ export const Overlay = defineComponent({
       await Dialog.confirm({
         title: '确认',
         message: '你真的要退出登录吗？'
-      }).catch(() => {})
-      localStorage.removeItem('jwt')
+      })
+        .then(() => {
+          localStorage.removeItem('jwt')
+          window.location.reload()
+        })
+        .catch(() => {})
     }
     return () => (
       <>

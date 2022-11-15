@@ -13,7 +13,7 @@ type Action = {
   reset: () => void
 }
 
-export const useItemStore = (id: string | string[]) =>
+export const useItemStore = (id: string | (undefined| string)[]) =>
   defineStore<string, State, {}, Action>(typeof id === 'string' ? id : id.join('-'), {
     state: () => ({
       items: [],

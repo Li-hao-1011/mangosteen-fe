@@ -25,7 +25,7 @@ export const Overlay = defineComponent({
       await Dialog.confirm({
         title: '确认',
         message: '你真的要退出登录吗？'
-      }).catch(()=>{})
+      }).catch(() => {})
       localStorage.removeItem('jwt')
     }
     return () => (
@@ -47,6 +47,12 @@ export const Overlay = defineComponent({
           </section>
           <nav>
             <ul class={s.action_list}>
+              <li>
+                <RouterLink to="/items" class={s.action}>
+                  <Icon name="pig" class={s.icon} />
+                  <span>记账</span>
+                </RouterLink>
+              </li>
               <li>
                 <RouterLink to="/statistics" class={s.action}>
                   <Icon name="charts" class={s.icon} />

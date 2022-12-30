@@ -28,7 +28,7 @@ export default defineConfig(({ command, mode }) => {
     server: {
       proxy: {
         '/api/v1': {
-          target: 'http://119.13.82.6:3000'
+          target: 'http://119.12.167.225:3000'
         }
       }
     },

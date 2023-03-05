@@ -20,6 +20,7 @@ export type IconName =
   | '经济图表'
   | '钱包收入'
   | '未开通支付方式'
+  | '钱包'
 
 export const Icon = defineComponent({
   props: {

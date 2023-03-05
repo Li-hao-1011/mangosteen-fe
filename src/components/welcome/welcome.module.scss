@@ -9,7 +9,8 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  > h2 {
+
+  >h2 {
     margin-top: 40px;
   }
 }
@@ -17,7 +18,7 @@
 .actions {
   position: fixed;
   z-index: var(--z-index-bottom-nav);
-  background: var(--welcome-bg-end);
+  background: var(--welcome-bg-end-1);
   left: 0;
   bottom: 0;
   width: 100%;
@@ -29,7 +30,8 @@
   padding: 0 16px;
   color: var(--welcome-text);
   padding-bottom: var(--welcome-nav-gap);
-  > .fake {
+
+  >.fake {
     visibility: hidden;
   }
 }

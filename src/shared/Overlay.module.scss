@@ -7,11 +7,13 @@
   width: 100%;
   height: calc(100% - var(--top-safe-area-height));
 }
-.email{
+
+.email {
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .overlay {
   position: fixed;
   z-index: calc(var(--z-index-overlay) + 1);
@@ -22,25 +24,35 @@
   height: calc(100% - var(--top-safe-area-height));
   color: var(--text);
 }
+
 .currentUser {
   padding: 32px 16px;
-  background: var(--overlay-user-bg);
+  background: var(--overlay-user-bg-1);
   color: var(--overlay-user-text);
 }
+
 .action {
   display: flex;
   justify-content: start;
   align-items: center;
   padding: 12px 16px;
+
   &_list {
     padding-top: 16px;
     font-size: 20px;
+
+    :active {
+      background: var(--number-button-bg-active-important-1);
+      color: aliceblue;
+    }
   }
-  > .icon {
+
+  >.icon {
     margin-right: 12px;
   }
 }
-.icon{
+
+.icon {
   width: 30px;
   height: 30px;
   position: relative;

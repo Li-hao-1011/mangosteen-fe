@@ -1,6 +1,5 @@
 import { Overlay } from 'vant'
-import { Component, DefineComponent, defineComponent, PropType, reactive, ref } from 'vue'
-import { ItemSummary } from '../components/item/ItemSummary'
+import { defineComponent, PropType, reactive, ref } from 'vue'
 import { Form, FormItem } from '../shared/Form'
 import { OverlayIcon } from '../shared/Overlay'
 import { Tab, Tabs } from '../shared/Tabs'
@@ -34,7 +33,7 @@ export const TimeTabsLayout = defineComponent({
       default: false
     }
   },
-  setup: (props, context) => {
+  setup: (props, _context) => {
     const refSelected = ref('本月')
     const time = new Time()
     const tempTime = reactive({
@@ -73,7 +72,7 @@ export const TimeTabsLayout = defineComponent({
     return () => (
       <MainLayout>
         {{
-          title: () => '山竹记账',
+          title: () => 'WalletWizard',
           icon: () => <OverlayIcon />,
           default: () => (
             <>

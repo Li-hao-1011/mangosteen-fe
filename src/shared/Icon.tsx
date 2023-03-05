@@ -1,14 +1,31 @@
-import { defineComponent, defineProps, PropType } from 'vue';
-import s from './Icon.module.scss';
+import { defineComponent, PropType } from 'vue'
+import s from './Icon.module.scss'
 
-export type IconName = 'add' | 'chart' | 'clock' | 'cloud' |
-  'mangosteen' | 'pig' | 'menu' | 'charts' | 'notify' | 'export' | 'left' | 'notes' | 'date'
+export type IconName =
+  | 'add'
+  | 'chart'
+  | 'clock'
+  | 'cloud'
+  | 'mangosteen'
+  | 'pig'
+  | 'menu'
+  | 'charts'
+  | 'notify'
+  | 'export'
+  | 'left'
+  | 'notes'
+  | 'date'
+  | 'newpig'
+  | '钱包的副本'
+  | '经济图表'
+  | '钱包收入'
+  | '未开通支付方式'
 
 export const Icon = defineComponent({
   props: {
     name: {
       type: String as PropType<IconName>,
-      required: true,
+      required: true
     },
     onClick: {
       type: Function as PropType<(e: MouseEvent) => void>
@@ -22,4 +39,3 @@ export const Icon = defineComponent({
     )
   }
 })
-

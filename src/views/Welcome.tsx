@@ -11,7 +11,7 @@ const pushMap: Record<string, string> = {
   Welcome4: '/items'
 }
 export const Welcome = defineComponent({
-  setup: (props, context) => {
+  setup: (_props, _context) => {
     const main = ref<HTMLElement>()
     const { direction, swiping } = useSwipe(main, { beforeStart: (e) => e.preventDefault() })
     const route = useRoute()
@@ -29,13 +29,13 @@ export const Welcome = defineComponent({
       <div class={s.wrapper}>
         <header>
           <svg>
-            <use xlinkHref="#mangosteen"></use>
+            <use xlinkHref="#钱包"></use>
           </svg>
-          <h1>山竹记账</h1>
+          <h1>WalletWizard</h1>
         </header>
         <main class={s.main} ref={main}>
           <RouterView name="main">
-            {({ Component: X, route: R }: { Component: VNode; route: RouteLocationNormalizedLoaded }) => (
+            {({ Component: X, route: _R }: { Component: VNode; route: RouteLocationNormalizedLoaded }) => (
               <Transition
                 enterFromClass={s.slide_fade_enter_from}
                 enterActiveClass={s.slide_fade_enter_active}

@@ -19,13 +19,13 @@
   --input-border-color: #5c33be;
   --input-min-height: 48px;
   --input-radius: var(--button-radius);
-  --input-shadow: rgba(0,0,0,0.25);
+  --input-shadow: rgba(0, 0, 0, 0.25);
   --list-amount-text: var(--amount-text);
   --list-tag-text: #333;
   --list-time-text: var(--date-text);
   --main: #5c33be;
-  --navbar-bg-end: var(--welcome-bg-end);
-  --navbar-bg-start: var(--welcome-bg-start);
+  --navbar-bg-end: var(--welcome-bg-end-1);
+  --navbar-bg-start: var(--welcome-bg-start-1);
   --navbar-text: white;
   --number-button-bg-important: #5c33be;
   --number-button-bg: white;
@@ -55,4 +55,14 @@
   --z-index-navbar: 32;
   --z-index-overlay: 16;
   --bar-bg: #CCCCCC;
+
+
+  --welcome-bg-start-1: rgb(101, 101, 236);
+  --welcome-bg-end-1: rgb(55, 55, 141);
+  --button-bg-1: var(--welcome-bg-start-1);
+  --number-button-bg-important-1: var(--welcome-bg-start-1);
+  --number-button-bg-active-important-1: rgb(128, 128, 250);
+  --float-button-bg-1: var(--button-bg-1);
+  --main-1: var(--welcome-bg-start-1);
+  --overlay-user-bg-1: var(--welcome-bg-end-1);
 }

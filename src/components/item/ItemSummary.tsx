@@ -1,4 +1,4 @@
-import { defineComponent, PropType, reactive, ref, watch } from 'vue'
+import { defineComponent, PropType, reactive, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useAfterMe } from '../../hooks/useAfterMe'
 import { Button } from '../../shared/Button'
@@ -6,7 +6,6 @@ import { Center } from '../../shared/Center'
 import { Datetime } from '../../shared/Datetime'
 import { FloatButton } from '../../shared/FloatButton'
 import { http } from '../../shared/Http'
-import { Icon } from '../../shared/Icon'
 import { Money } from '../../shared/Money'
 import { useItemStore } from '../../stores/useItemStore'
 import s from './ItemSummary.module.scss'
@@ -112,7 +111,7 @@ export const ItemSummary = defineComponent({
               </ol>
               <div class={s.more}>
                 {itemStore.hasMore ? (
-                  <Button onClick={() => itemStore.fetchNextPage(props.startDate, props.endDate)}>加载更多</Button>
+                  <Button onClick={() => itemStore.fetchNextPage(props.startDate, props.endDate)}>更多数据...</Button>
                 ) : (
                   <span>没有更多</span>
                 )}
@@ -121,8 +120,11 @@ export const ItemSummary = defineComponent({
           ) : (
             <>
               <Center direction="|" class={s.pig_wrapper}>
-                <Icon name="pig" class={s.pig} />
-                <p>目前没有记账~</p>
+                {/* <Icon name="未开通支付方式" class={s.pig} /> */}
+                <svg>
+                  <use xlinkHref="#未开通支付方式"></use>
+                </svg>
+                <p>请开始记账吧~</p>
               </Center>
               <div class={s.button_wrapper}>
                 <RouterLink to="/items/create">

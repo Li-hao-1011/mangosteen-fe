@@ -22,8 +22,6 @@ export const SignInPage = defineComponent({
       const link = location.hash.split('?')
       return link.at(-1) === 'preview=yes'
     }
-    console.log(isPreviewPage())
-
     if (isPreviewPage()) {
       formData.email = 'lihao.coder@foxmail.com'
       formData.code = '123456'

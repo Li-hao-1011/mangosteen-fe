@@ -1,12 +1,10 @@
-import axios, { AxiosResponse } from 'axios'
-import { defineComponent, PropType, reactive, ref } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useBool } from '../hooks/useBool'
 import { MainLayout } from '../layouts/MainLayout'
 import { BackIcon } from '../shared/BackIcon'
 import { Button } from '../shared/Button'
 import { Form, FormItem } from '../shared/Form'
-import { history } from '../shared/history'
 import { http } from '../shared/Http'
 import { Icon } from '../shared/Icon'
 import { hasError, validate } from '../shared/validate'
@@ -14,12 +12,22 @@ import { useMeStore } from '../stores/useMeStore'
 import s from './SignInPage.module.scss'
 
 export const SignInPage = defineComponent({
-  setup: (props, context) => {
+  setup: (_props, _context) => {
     const meStore = useMeStore()
     const formData = reactive({
-      email: 'lihao.coder@foxmail.com',
+      email: '',
       code: ''
     })
+    const isPreviewPage = () => {
+      const link = location.hash.split('?')
+      return link.at(-1) === 'preview=yes'
+    }
+    console.log(isPreviewPage())
+
+    if (isPreviewPage()) {
+      formData.email = 'lihao.coder@foxmail.com'
+      formData.code = '123456'
+    }
     const errors = reactive({
       email: [],
       code: []
@@ -98,13 +106,13 @@ export const SignInPage = defineComponent({
                   label="验证码"
                   type="validationCode"
                   placeholder="请输入六位数字"
-                  countFrom={1}
+                  countFrom={60}
                   disabled={refDisabled.value}
                   onClick={onClickSendValidationCode}
                   v-model={formData.code}
                   error={errors.code?.[0]}
                 />
-                <FormItem style={{ paddingTop: '96px' }}>
+                <FormItem style={{ paddingTop: '50px' }}>
                   <Button type="submit">登录</Button>
                 </FormItem>
               </Form>

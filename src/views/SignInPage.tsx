@@ -23,7 +23,7 @@ export const SignInPage = defineComponent({
       return link.at(-1) === 'preview=yes'
     }
     if (isPreviewPage()) {
-      formData.email = 'lihao.coder@foxmail.com'
+      formData.email = '1746058596@qq.com'
       formData.code = '123456'
     }
     const errors = reactive({
